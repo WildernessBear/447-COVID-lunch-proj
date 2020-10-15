@@ -1,7 +1,9 @@
-#Covid Lunch Project
+# Covid Lunch Project
 
-##To run the program:
+A lot of this iteration was figuring out how git works and learning Django.
 
-##Dependencies:
+## To run the program:
 
-##To run the tests:
+## Dependencies:
+
+## To run the tests:
