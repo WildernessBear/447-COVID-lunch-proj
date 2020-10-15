@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 
 class UserProfileInfo(models.Model):
@@ -9,3 +10,5 @@ class UserProfileInfo(models.Model):
 
     def __str__(self):
         return self.user.username
+class User(AbstractUser):
+    pass
