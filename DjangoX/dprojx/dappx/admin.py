@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+from .models import MyUser
+
 
 # Unregister the provided model admin
-admin.site.unregister(User)
+admin.site.unregister(MyUser)
 
 # Register our own model admin, based on the default UserAdmin
-@admin.register(User)
+@admin.register(MyUser)
 class CustomUserAdmin(UserAdmin):
     readonly_fields = [
         'date_joined',
