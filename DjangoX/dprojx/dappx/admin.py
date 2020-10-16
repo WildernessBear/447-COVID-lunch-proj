@@ -3,6 +3,8 @@ from django.contrib.auth.admin import UserAdmin
 from .models import MyUser
 
 
+# So, is this all setting up a regular user or an admin? Should that be spread amongst the two files?
+# can it be in a reasonable way, and what bits are needed for that? what about groups? ughhhhhh
 # Unregister the provided model admin
 admin.site.unregister(MyUser)
 

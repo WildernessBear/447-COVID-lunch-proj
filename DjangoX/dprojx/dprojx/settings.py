@@ -102,6 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# configures the custom user, small problem is that the database already exists here oooops
 AUTH_USER_MODEL = 'dprojx.MyUser'
 
 # Internationalization
