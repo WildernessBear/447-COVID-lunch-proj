@@ -65,3 +65,6 @@ def user_login(request):
             return HttpResponse("Invalid login details given")
     else:
         return render(request, 'dappx/login.html', {})
+
+def menu(request):
+    return HttpResponse("You are at menu!")
