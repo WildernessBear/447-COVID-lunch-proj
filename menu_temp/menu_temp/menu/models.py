@@ -17,10 +17,6 @@ class School(models.Model):
 class Menu(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, null=False)
     name = models.CharField(max_length=80)
-    # what do these meals actually look like??
-
-    # delete this when Meal is working
-    meal_ls = []
 
     def __str__(self):
         return self.name
