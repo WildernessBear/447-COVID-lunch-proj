@@ -6,6 +6,7 @@ from .models import SchoolDistrict, School, Menu, Meal
 
 # menu models test case
 # makes sure the databases associated with models are organized correctly
+# also prints out contents of temporary databases
 # breakdown of temp databases:
 #   10 districts
 #   each district has 10 schools
@@ -22,6 +23,7 @@ class MenuModelsTestCase(TestCase):
         school = 'school'
         menu = 'menu'
         item = 'item'
+        description = 'description goes here'
 
         # create districts
         for i in range(self.num_districts):
@@ -35,16 +37,36 @@ class MenuModelsTestCase(TestCase):
                 temp_school = temp_district.school_set.create(name=school)
                 school = 'school'
 
+                # create menus for each school
+                for k in range(self.num_menus):
+                    menu += str(k)
+                    temp_menu = temp_school.menu_set.create(name=menu)
+                    menu = 'menu'
+
+                    # create items for each menu
+                    for m in range(self.num_items):
+                        item += str(m)
+                        temp_menu.meal_set.create(name=item, description=description)
+                        item = 'item'
+
 
     def test_organization_of_db(self):
-        for x in SchoolDistrict.objects.all():
-            print(x.name)
-            for y in x.school_set.all():
-                print('\t', y.name)
+        for i in SchoolDistrict.objects.all():
+            print(i.name)
+            for j in i.school_set.all():
+                print('\t', j.name)
+                for k in j.menu_set.all():
+                    print('\t\t', k.name)
+                    for m in k.meal_set.all():
+                        print('\t\t\t', m.name, ': ', m.description)
 
         for district in SchoolDistrict.objects.all():
             for school in district.school_set.all():
                 self.assertEqual(district.id, school.district.id)
+                for menu in school.menu_set.all():
+                    self.assertEqual(school.id, menu.school.id)
+                    for item in menu.meal_set.all():
+                        self.assertEqual(menu.id, item.menu.id)
 
 
 
