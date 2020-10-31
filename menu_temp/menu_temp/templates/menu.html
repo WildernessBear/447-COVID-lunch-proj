@@ -11,7 +11,7 @@
             {{ menu.name }}
             <ul>
                 {% for meal in menu.meal_ls %}
-                    <li>{{ meal }}</li>
+                    <li>{{ meal.name }}: {{ meal.description }}</li>
                 {% endfor%}
             </ul>
         {% endfor %}
