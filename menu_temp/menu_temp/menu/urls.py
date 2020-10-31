@@ -6,7 +6,7 @@ from . import views
 #app_name = 'dappx'
 
 urlpatterns = [
-    path('menu/<int:id>', views.menu, name='menu'),
+    path('menu/<int:id>', views.menu_view, name='menu'),
     #url(r'^menu/$', views.menu, name='menu'),
     #path('', views.menu, name='menu'),
 ]

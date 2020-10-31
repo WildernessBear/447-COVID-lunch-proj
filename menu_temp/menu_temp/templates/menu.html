@@ -5,6 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-    <p>is there text in here?</p>
+    <h1>{{ school }}</h1>
+    <p>
+        {% for menu in menu_ls %}
+            {{ menu.name }}
+            <ul>
+                {% for meal in menu.meal_ls %}
+                    <li>{{ meal }}</li>
+                {% endfor%}
+            </ul>
+        {% endfor %}
+    </p>
 </body>
 </html>
