@@ -1,4 +1,4 @@
-# Covid Lunch Project
+# 447-COVID-lunch-proj
 
 A lot of this iteration was figuring out how git works and learning Django. At this point, the program does not run. 
 
