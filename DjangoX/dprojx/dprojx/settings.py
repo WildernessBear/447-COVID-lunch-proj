@@ -102,12 +102,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# configures the custom user, small problem is that the database already exists here oooops
+AUTH_USER_MODEL = 'dappx.MyUser'
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
