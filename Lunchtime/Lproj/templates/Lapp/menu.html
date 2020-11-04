@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "Lapp/base.html" %}
+{% block body_block %}
     <h1>{{ school }}</h1>
     <p>
         {% for menu in menu_ls %}
@@ -16,5 +11,4 @@
             </ul>
         {% endfor %}
     </p>
-</body>
-</html>
+{% endblock %}

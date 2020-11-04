@@ -73,15 +73,18 @@ class MealObj:
         self.description = description
 
 def menu_view(response, id):
-    try:
+    # this dictionary will be passed to the template
+    context = {
+        'school': '',
+        'menu_ls': [],
+        'error': None
+    }
+
+    if School.objects.filter(pk=id).exists():
+
         school = School.objects.get(pk=id)
 
-        # this dictionary will be passed to the template
-        context = {
-            'school': school.name,
-            'menu_ls': [],
-            'error': None
-        }
+        context['school'] = school.name
 
         print(school.name)
 
@@ -97,9 +100,11 @@ def menu_view(response, id):
                 context['menu_ls'].append(temp_menu)
 
         else:
+            context['menu_ls'].append('menu does not exist')
             context['error'] = 'menu does not exist'
 
-    except:
+    else:
+        context['school'] = 'school does not exist'
         context['error'] = 'school does not exist'
 
     return render(response, 'Lapp/menu.html', context)
