@@ -1,14 +1,13 @@
 from django.shortcuts import render
-from dappx.forms import UserForm
+from .forms import UserForm # watch here; may be Lapp.---
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import SchoolDistrict, School, Menu
 
 
 def index(request):
-    return render(request, 'dappx/index.html')
+    return render(request, 'Lapp/index.html')
 
 
 @login_required
@@ -35,7 +34,7 @@ def register(request):
             print(user_form.errors, )
     else:
         user_form = UserForm()
-    return render(request, 'dappx/registration.html',
+    return render(request, 'Lapp/registration.html',
                   {'user_form': user_form,
                    'registered': registered})
 
@@ -56,9 +55,4 @@ def user_login(request):
             print("They used username: {} and password: {}".format(username, password))
             return HttpResponse("Invalid login details given")
     else:
-        return render(request, 'dappx/login.html', {})
-
-def menu(response, id):
-    #school_id = 1
-    school = School.objects.get(pk=id)
-    return HttpResponse("You are at menu %s!" % school.name)
+        return render(request, 'Lapp/login.html', {})

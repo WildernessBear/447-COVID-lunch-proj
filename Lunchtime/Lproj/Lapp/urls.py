@@ -3,7 +3,7 @@ from django.urls import path
 from . import views
 
 # SET THE NAMESPACE!
-app_name = 'dappx'
+app_name = 'Lapp'
 # Be careful setting the name to just /login use userlogin instead!
 urlpatterns = [
     url(r'^register/$', views.register, name='register'),
