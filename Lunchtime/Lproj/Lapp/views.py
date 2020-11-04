@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from .models import SchoolDistrict, School, Menu
 
 
 def index(request):
@@ -56,3 +57,8 @@ def user_login(request):
             return HttpResponse("Invalid login details given")
     else:
         return render(request, 'Lapp/login.html', {})
+
+def menu(response, id):
+    #school_id = 1
+    school = School.objects.get(pk=id)
+    return HttpResponse("You are at menu %s!" % school.name)
