@@ -3,10 +3,9 @@
 A lot of this iteration was figuring out how git works and learning Django. At this point, the program does not run. 
 
 ## To run the program:
-1. Navigate to `Lunchtime/Lproj/mysite` on your command line
+1. Navigate to `Lunchtime/Lproj/` on your command line
 2. Enter the command `python manage.py runserver` (some terminals will need the command `python3`)
 3. Navigate to the local link in your browser
-4. Add /admin to the link
 
 ## Dependencies:
 - python3
@@ -20,4 +19,4 @@ A lot of this iteration was figuring out how git works and learning Django. At t
 Menu tests:
 1. Navigate to `Lunchtime/Lproj/`
 2. Enter the command `python manage.py test Lapp.test_menu`
-
+This test will make sure the databases for lunches are set up properly.
