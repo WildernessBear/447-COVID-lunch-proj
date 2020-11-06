@@ -10,14 +10,17 @@
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
         <ul class="nav navbar-nav">
-{# Django Home Link / Admin Link / Register Link#}
-          <li><a class="navbar-brand" href="{% url 'index' %}">DJANGO</a></li>
-          <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
-          <li><a class="navbar-link" href="{% url 'Lapp:register' %}">Register</a></li>
+{# Home Link / Admin Link / Register Link / Location-Time Link#}
+
           {# Some logic on what to display for last item#}
           {% if user.is_authenticated %}
+            <li><a class="navbar-brand" href="{% url 'index' %}">Home</a></li>
+            <li><a class="navbar-link" href="{% url 'Lapp:loc_time_menu' %}">Location & Times</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
           {% else %}
+            <li><a class="navbar-brand" href="{% url 'index' %}">Home</a></li>
+            <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
+            <li><a class="navbar-link" href="{% url 'Lapp:register' %}">Register</a></li>
             <li><a class="navbar-link" href="{% url 'Lapp:user_login' %}">Login</a></li>
           {% endif %}
 </ul>
