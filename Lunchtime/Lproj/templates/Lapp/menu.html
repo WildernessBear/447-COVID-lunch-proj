@@ -7,6 +7,8 @@
             <ul>
                 {% for meal in menu.meal_ls %}
                     <li>{{ meal.name }}: {{ meal.description }}</li>
+                    <h3>Meal Preparations: </h3>
+                    <li>{{ Meal.preparations }}</li>
                 {% endfor%}
             </ul>
         {% endfor %}
