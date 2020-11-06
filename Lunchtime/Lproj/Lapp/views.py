@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from .models import SchoolDistrict, School, Menu, Meal
 
 
 def index(request):
@@ -61,3 +62,54 @@ def user_login(request):
             return HttpResponse("Invalid login details given")
     else:
         return render(request, 'Lapp/login.html', {})
+
+# this holds menu information for a single menu
+class MenuObj:
+    def __init__(self, name):
+        self.name = name
+        self.meal_ls = []
+    def __str__(self):
+        return self.name
+
+# this holds information for a single meal
+class MealObj:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+def menu_view(response, id):
+    # this dictionary will be passed to the template
+    context = {
+        'school': '',
+        'menu_ls': [],
+        'error': None
+    }
+
+    if School.objects.filter(pk=id).exists():
+
+        school = School.objects.get(pk=id)
+
+        context['school'] = school.name
+
+        print(school.name)
+
+        if school.menu_set.exists():
+            for menu in school.menu_set.all():
+                temp_menu = MenuObj(menu.name)
+
+                for item in menu.meal_set.all():
+                    temp_meal = MealObj(item.name, item.description)
+
+                    temp_menu.meal_ls.append(temp_meal)
+
+                context['menu_ls'].append(temp_menu)
+
+        else:
+            context['menu_ls'].append('menu does not exist')
+            context['error'] = 'menu does not exist'
+
+    else:
+        context['school'] = 'school does not exist'
+        context['error'] = 'school does not exist'
+
+    return render(response, 'Lapp/menu.html', context)

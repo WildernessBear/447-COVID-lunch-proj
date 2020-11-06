@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls import url, include
 from Lapp import views  # Ignore Error
 
@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^special/', views.special, name='special'),
     url(r'^Lapp/', include('Lapp.urls')),
     url(r'^logout/$', views.user_logout, name='logout'),
+    path('menu/<int:id>', views.menu_view, name='menu'),
 ]
