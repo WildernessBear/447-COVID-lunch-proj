@@ -4,9 +4,9 @@
   <div class="jumbotron">
     <h1>Welcome to the School Lunch Program!</h1>
     {% if user.is_authenticated %}
-        <h2>Hello {{ user.username }}</h2>
+        <h2>Hello {{ user.username }}!</h2>
     {% else %}
-        <h2>Register or Login if you'd like to</h2>
+        <h2>Register or Login to see information about meals.</h2>
     {% endif %}
   </div>
 </div>
