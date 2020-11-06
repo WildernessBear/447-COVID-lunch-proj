@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import UserForm # watch here; may be Lapp.---
+from .forms import UserForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -20,6 +20,11 @@ def special(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+@login_required
+def loc_time_menu(request):
+    return render(request, 'Lapp/loc-time.html', {})
 
 
 def register(request):

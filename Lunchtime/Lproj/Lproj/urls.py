@@ -16,14 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url, include
-from Lapp import views # watch
+from Lapp import views  # Ignore Error
 
 urlpatterns = [
     # path('', include(('Lapp.urls', 'Lapp'), namespace='Lapp'))
     path('admin/', admin.site.urls),
-    url(r'^$',views.index,name='index'),
-    url(r'^special/',views.special,name='special'),
-    url(r'^Lapp/',include('Lapp.urls')),
+    url(r'^$', views.index, name='index'),
+    url(r'^special/', views.special, name='special'),
+    url(r'^Lapp/', include('Lapp.urls')),
     url(r'^logout/$', views.user_logout, name='logout'),
     path('menu/<int:id>', views.menu_view, name='menu'),
 ]
