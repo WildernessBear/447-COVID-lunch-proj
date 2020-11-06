@@ -1,6 +1,6 @@
 # 447-COVID-lunch-proj
 
-Minimal functionality now exists, a new user may register and log in, an existing user may log in, an admin may log in either at the site itself or to the admin page.
+Minimal functionality now exists. A new user may register and log in, an existing user may log in, and an admin may log in either at the site itself or to the admin page.
 
 ## To run the program:
 1. Navigate to `Lunchtime/Lproj/mysite` on your command line
@@ -19,4 +19,3 @@ Minimal functionality now exists, a new user may register and log in, an existin
 Menu tests:
 1. Navigate to `Lunchtime/Lproj/`
 2. Enter the command `python manage.py test Lapp.test_menu`
-
