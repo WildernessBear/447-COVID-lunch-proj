@@ -1,0 +1,41 @@
+## The current example database was created with this function: ##
+
+# makes an example database
+# breakdown of temp databases:
+#   10 districts
+#   each district has 10 schools
+#   each school has 2 menus
+#   each menu has 3 items
+def setUpDB():
+    num_districts = 10
+    num_schools = 10
+    num_menus = 2
+    num_items = 3
+
+    district = 'District'
+    school = 'School'
+    menu = 'Menu'
+    item = 'Item'
+    description = 'description goes here'
+
+    # create districts
+    for i in range(num_districts):
+        district = 'District' + str(i)
+        temp_district = SchoolDistrict.objects.create(name=district)
+
+        # create schools in each district
+        for j in range(num_schools):
+            school = 'School' + str(i) + '.' + str(j)
+            temp_school = temp_district.school_set.create(name=school)
+
+            # create menus for each school
+            for k in range(num_menus):
+                menu = 'menu' + str(i) + '.' + str(j) + '.' + str(k)
+                temp_menu = temp_school.menu_set.create(name=menu)
+
+                # create items for each menu
+                for m in range(num_items):
+                    item = 'item' + str(i) + '.' + str(j) + '.' + str(k) + '.' + str(m)
+                    temp_menu.meal_set.create(name=item, description=description)
+
+setUpDB()
