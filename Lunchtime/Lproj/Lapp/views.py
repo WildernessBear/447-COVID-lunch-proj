@@ -12,7 +12,7 @@ def index(request):
 
 
 @login_required
-def special(request):
+def special():  # Removed: request
     return HttpResponse("You are logged in !")
 
 
@@ -23,8 +23,13 @@ def user_logout(request):
 
 
 @login_required
-def loc_time_menu(request):
+def meals_menu(request):
     return render(request, 'Lapp/loc-time.html', {})
+
+
+@login_required
+def schools_menu(request):
+    return render(request, 'Lapp/schools.html', {})
 
 
 def register(request):
@@ -63,19 +68,23 @@ def user_login(request):
     else:
         return render(request, 'Lapp/login.html', {})
 
+
 # this holds menu information for a single menu
 class MenuObj:
     def __init__(self, name):
         self.name = name
         self.meal_ls = []
+
     def __str__(self):
         return self.name
+
 
 # this holds information for a single meal
 class MealObj:
     def __init__(self, name, description):
         self.name = name
         self.description = description
+
 
 def menu_view(response, id):
     # this dictionary will be passed to the template

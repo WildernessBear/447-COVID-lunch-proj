@@ -12,6 +12,8 @@ from .models import SchoolDistrict, School, Menu, Meal
 #   each district has 10 schools
 #   each school has 2 menus
 #   each menu has 3 items
+
+
 class MenuModelsTestCase(TestCase):
     def setUp(self):
         self.num_districts = 10
@@ -49,7 +51,6 @@ class MenuModelsTestCase(TestCase):
                         temp_menu.meal_set.create(name=item, description=description)
                         item = 'item'
 
-
     def test_organization_of_db(self):
         for i in SchoolDistrict.objects.all():
             print(i.name)
@@ -67,6 +68,3 @@ class MenuModelsTestCase(TestCase):
                     self.assertEqual(school.id, menu.school.id)
                     for item in menu.meal_set.all():
                         self.assertEqual(menu.id, item.menu.id)
-
-
-
