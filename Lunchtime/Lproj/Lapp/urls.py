@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^user_login/$', views.user_login, name='user_login'),
     url(r'^meals_menu/$', views.meals_menu, name='meals_menu'),
     url(r'^schools_menu/$', views.schools_menu, name='schools_menu'),
-    path('menu/<int:id>', views.menu_view, name='menu'),
+    path('menu/<int:sch_id>', views.meals_menu, name='menu'),
 ]

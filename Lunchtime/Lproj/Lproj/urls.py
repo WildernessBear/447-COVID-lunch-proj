@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path  # Removed: , include
 from django.conf.urls import url, include
-from Lapp import views  # Ignore Error
+# noinspection PyUnresolvedReferences
+from Lapp import views
 
 urlpatterns = [
     # path('', include(('Lapp.urls', 'Lapp'), namespace='Lapp'))
@@ -25,5 +26,5 @@ urlpatterns = [
     url(r'^special/', views.special, name='special'),
     url(r'^Lapp/', include('Lapp.urls')),
     url(r'^logout/$', views.user_logout, name='logout'),
-    path('menu/<int:id>', views.menu_view, name='menu'),
+    path('menu/<int:sch_id>', views.meals_menu, name='menu'),
 ]

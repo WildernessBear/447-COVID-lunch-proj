@@ -15,6 +15,7 @@ class SchoolDistrict(models.Model):
 
 
 class School(models.Model):
+    objects = None
     district = models.ForeignKey(SchoolDistrict, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=80)
 
