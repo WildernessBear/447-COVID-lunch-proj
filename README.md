@@ -22,7 +22,8 @@ Menu tests:
     ```python
     def schools_menu(request):
     def meals_menu(response, sch_id):
-    def meal_page(response, item_id):```
+    def meal_page(response, item_id):
+    ```
 2. Navigate to `Lunchtime/Lproj/`
 3. Enter the command `python manage.py test Lapp.test_menu`
 This test will make sure the databases for lunches are set up properly.
