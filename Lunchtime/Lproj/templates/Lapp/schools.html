@@ -3,11 +3,10 @@
 <div class="container">
   <div class="jumbotron">
     <h1>Select a School</h1>
-      <h3>School One</h3>
-      <h3>School Two</h3>
-      <h3>School Three</h3>
-      <h3>School Four</h3>
-      <h3>School five</h3>
+
+      {% for school in school_ls %}
+        <h3><a href="{% url 'menu' school.id %}">{{school.name}}</a></h3>
+      {% endfor %}
 
       <!-- <ul>
       Use as template to replace with school names
