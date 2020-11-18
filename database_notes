@@ -6,17 +6,21 @@
 #   each district has 10 schools
 #   each school has 2 menus
 #   each menu has 3 items
+#   each meal has 3 ingredients
 def setUpDB():
     num_districts = 10
     num_schools = 10
     num_menus = 2
     num_items = 3
+    num_ingredients = 3
 
     district = 'District'
     school = 'School'
     menu = 'Menu'
     item = 'Item'
     description = 'description goes here'
+    prep = 'preparation goes here'
+    ingredient = 'ingredient'
 
     # create districts
     for i in range(num_districts):
@@ -36,6 +40,11 @@ def setUpDB():
                 # create items for each menu
                 for m in range(num_items):
                     item = 'item' + str(i) + '.' + str(j) + '.' + str(k) + '.' + str(m)
-                    temp_menu.meal_set.create(name=item, description=description)
+                    temp_item = temp_menu.meal_set.create(name=item, description=description, prep=prep)
+
+                    # create ingredients for each item
+                    for n in range(num_ingredients):
+                        ingredient = 'ingredient' + str(i) + '.' + str(j) + '.' + str(k) + '.' + str(m) + '.' + str(n)
+                        temp_item.ingredient_set.create(name=ingredient)
 
 setUpDB()

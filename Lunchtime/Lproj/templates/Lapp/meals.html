@@ -72,7 +72,7 @@ body {font-family: Verdana, sans-serif;}
         <ul class="meal">
             {% for menu in menu_ls %}
             {% for meal in menu.meal_ls %}
-            <li><a href="{% url 'meal_page' meal.id %}">{{meal.name}}</a> <br> {{meal.description}}</li>
+            <li><a href="{% url 'meal_page' meal.id %}">{{meal.name}}</a></li>
             {% endfor %}
             {% endfor %}
         </ul>

@@ -24,10 +24,12 @@ class MenuObj:
 
 # this holds information for a single meal
 class MealObj:
-    def __init__(self, id, name, description):
+    def __init__(self, id, name, description, prep):
         self.id = id
         self.name = name
         self.description = description
+        self.prep = prep
+        self.ingredient_ls = []
 
 def index(request):
     return render(request, 'Lapp/index.html')
@@ -77,8 +79,12 @@ def meals_menu(response, sch_id):
             for menu in school.menu_set.all():
                 temp_menu = MenuObj(menu.id, menu.name)
 
-                for item in menu.meal_set.all():
-                    temp_meal = MealObj(item.id, item.name, item.description)
+                for meal in menu.meal_set.all():
+                    temp_meal = MealObj(meal.id, meal.name, meal.description, meal.prep)
+
+                    if(meal.ingredient_set.exists()):
+                        for ingredient in meal.ingredient_set.all():
+                            temp_meal.ingredient_ls.append(ingredient.name)
 
                     temp_menu.meal_ls.append(temp_meal)
 
@@ -97,13 +103,18 @@ def meals_menu(response, sch_id):
 @login_required
 def meal_page(response, item_id):
     context = {
-        'item': '',
+        'meal': '',
         'error': None
     }
 
-    item = Meal.objects.get(pk=item_id)
-    temp_meal = MealObj(item.id, item.name, item.description)
-    context['item'] = temp_meal
+    meal = Meal.objects.get(pk=item_id)
+    temp_meal = MealObj(meal.id, meal.name, meal.description, meal.prep)
+
+    if (meal.ingredient_set.exists()):
+        for ingredient in meal.ingredient_set.all():
+            temp_meal.ingredient_ls.append(ingredient.name)
+
+    context['meal'] = temp_meal
 
     return render(response, 'Lapp/meal_page.html', context)
 

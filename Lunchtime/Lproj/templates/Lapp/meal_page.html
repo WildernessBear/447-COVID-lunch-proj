@@ -1,12 +1,17 @@
 {% extends "Lapp/base.html" %}
 {% block body_block %}
 
-    <h1>{{ item.name }}</h1>
+    <h1>{{ meal.name }}</h1>
 
-    <h2>Ingredients</h2>
-    <p>{{ item.description }}</p>
+    <h3>Description</h3>
+    <p>{{ meal.description }}</p>
 
-    <h2>Preparation</h2>
-    <p>{{ item.description }}</p>
+    <h3>Ingredients</h3>
+    {% for ingredient in meal.ingredient_ls %}
+    <p>{{ ingredient }}</p>
+    {% endfor %}
+
+    <h3>Preparation</h3>
+    <p>{{ meal.prep }}</p>
 
 {% endblock %}
