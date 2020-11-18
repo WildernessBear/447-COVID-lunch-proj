@@ -6,18 +6,22 @@ from django.db import models
 class MyUser(AbstractUser):
     pass
 
+
 class SchoolDistrict(models.Model):
     name = models.CharField(max_length=80)
 
     def __str__(self):
         return self.name
 
+
 class School(models.Model):
+    objects = None
     district = models.ForeignKey(SchoolDistrict, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=80)
 
     def __str__(self):
         return self.name
+
 
 # menu for maybe the day of the week??
 class Menu(models.Model):
@@ -26,6 +30,7 @@ class Menu(models.Model):
 
     def __str__(self):
         return self.name
+
 
 # this will hold details of a single meal
 class Meal(models.Model):

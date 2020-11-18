@@ -1,0 +1,82 @@
+{% extends "Lapp/base.html" %}
+{% block body_block %}
+
+<!-- Formats the weekday calendar display -->
+<style>
+* {box-sizing: border-box;}
+ul {list-style-type: none;}
+body {font-family: Verdana, sans-serif;}
+
+.weekday {
+    margin: 0;
+    padding: 15px 0;
+    background-color: #ddd;
+}
+
+.weekday li {
+    display: inline-block;
+    width: 19%;
+    text-align: center;
+    font-size:16px;
+}
+
+.meal {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+}
+
+.meal li {
+    list-style-type: none;
+    display: inline-block;
+    width: 19%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size:14px;
+}
+
+/* Add media queries for smaller screens */
+@media screen and (max-width:720px) {
+    .weekday li, .meal li {width: 13.1%;}
+}
+
+@media screen and (max-width: 420px) {
+    .weekday li, .meals li {width: 12.5%;}
+    .meal li .active {padding: 2px;}
+}
+
+@media screen and (max-width: 290px) {
+    .weekday li, .meal li {width: 12.2%;}
+}
+</style>
+
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Pickup Location and Times</h1>
+      <!-- TO DO: Ideally, "{{ school }}" will link to a location on Maps -->
+      <!-- And school, start, and end times will all be user variables -->
+      <h2>{{ user.username }}, you can pick up your meals at
+          <a href="https://theuselessweb.com/">{{ school }}</a> from 11:00 AM to 12:00 PM</h2>
+      <h2>Not your school? Search for your school <a href="{% url 'Lapp:schools_menu' %}">HERE</a></h2>
+
+      <!-- Displays the days and meals for the given day -->
+        <ul class="weekday">
+            <li>Monday</li>
+            <li>Tuesday</li>
+            <li>Wednesday</li>
+            <li>Thursday</li>
+            <li>Friday</li>
+        </ul>
+
+        <ul class="meal">
+            {% for menu in menu_ls %}
+            {% for meal in menu.meal_ls %}
+            <li>{{meal.name}} <br> {{meal.description}}</li>
+            {% endfor %}
+            {% endfor %}
+        </ul>
+  </div>
+</div>
+</body>
+{% endblock %}

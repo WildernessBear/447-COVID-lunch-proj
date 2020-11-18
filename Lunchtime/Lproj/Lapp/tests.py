@@ -10,8 +10,8 @@ from selenium.webdriver.common.keys import Keys
 
 HOMEPAGE = 'http://localhost:8000'
 
-#USER_NAME = os.environ['USER_NAME']
-#USER_PASSWORD = os.environ['USER_PASSWORD']
+# USER_NAME = os.environ['USER_NAME']
+# USER_PASSWORD = os.environ['USER_PASSWORD']
 
 
 class FunctionalTests(TestCase):
@@ -28,7 +28,6 @@ class FunctionalTests(TestCase):
         # self.assertIN('The Lunch Project', self.browser.title)
         # assert self.browser.title == 'The Lunch Project'
         assert 'The Lunch Project' in self.browser.title
-
 
     def test_login_is_good(self):
         self.browser.get(HOMEPAGE)

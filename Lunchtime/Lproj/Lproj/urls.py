@@ -1,4 +1,4 @@
-"""dprojx URL Configuration
+"""Lproj URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -14,9 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path  # Removed: , include
 from django.conf.urls import url, include
-from Lapp import views  # Ignore Error
+# noinspection PyUnresolvedReferences
+from Lapp import views
 
 urlpatterns = [
     # path('', include(('Lapp.urls', 'Lapp'), namespace='Lapp'))
@@ -25,5 +26,5 @@ urlpatterns = [
     url(r'^special/', views.special, name='special'),
     url(r'^Lapp/', include('Lapp.urls')),
     url(r'^logout/$', views.user_logout, name='logout'),
-    path('menu/<int:id>', views.menu_view, name='menu'),
+    path('menu/<int:sch_id>', views.meals_menu, name='menu'),
 ]
