@@ -6,7 +6,6 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import School, Meal, SchoolDistrict  # , Time, Menu
 
-
 # this holds info for a single school
 class SchoolObj:
     def __init__(self, school_id, name):
