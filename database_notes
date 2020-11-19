@@ -7,20 +7,25 @@
 #   each school has 2 menus
 #   each menu has 3 items
 #   each meal has 3 ingredients
-def setUpDB():
-    num_districts = 10
-    num_schools = 10
-    num_menus = 2
-    num_items = 3
-    num_ingredients = 3
 
-    district = 'District'
-    school = 'School'
-    menu = 'Menu'
-    item = 'Item'
+
+def set_up_db():
+    num_districts = 3
+    num_schools = 4
+    num_menus = 2
+    num_items = 5
+    num_ingredients = 5
+    num_time = 1
+
+    # district = 'District'
+    # school = 'School'
+    # menu = 'Menu'
+    # item = 'Item'
     description = 'description goes here'
     prep = 'preparation goes here'
-    ingredient = 'ingredient'
+    # ingredient = 'ingredient'
+    # time1 = 'TI:ME AM'
+    # time2 = 'TI:ME PM'
 
     # create districts
     for i in range(num_districts):
@@ -31,6 +36,13 @@ def setUpDB():
         for j in range(num_schools):
             school = 'School' + str(i) + '.' + str(j)
             temp_school = temp_district.school_set.create(name=school)
+
+            # create times for each school
+            for k in range(num_time):
+                time1 = 'T' + str(i) + ':' + str(j) + str(k) + 'AM'
+                temp_time1 = temp_school.time_set.create(name=time1)
+                time2 = 'T' + str(i) + ':' + str(j) + str(k) + 'PM'
+                temp_time2 = temp_school.time_set.create(name=time2)
 
             # create menus for each school
             for k in range(num_menus):
@@ -47,4 +59,5 @@ def setUpDB():
                         ingredient = 'ingredient' + str(i) + '.' + str(j) + '.' + str(k) + '.' + str(m) + '.' + str(n)
                         temp_item.ingredient_set.create(name=ingredient)
 
-setUpDB()
+
+set_up_db()
