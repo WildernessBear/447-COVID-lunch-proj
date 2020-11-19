@@ -9,7 +9,6 @@ import django.template.loader
 
 # menu models test case
 # makes sure the databases associated with models are organized correctly
-# also prints out contents of temporary databases
 # breakdown of temp databases:
 #   10 districts
 #   each district has 10 schools
@@ -63,16 +62,7 @@ class MenuModelsTestCase(TestCase):
                             ingr = 'ingr'
 
     def test_organization_of_db(self):
-        # for i in SchoolDistrict.objects.all():
-        #     print(i.name)
-        #     for j in i.school_set.all():
-        #         print('\t', j.name)
-        #         for k in j.menu_set.all():
-        #             print('\t\t', k.name)
-        #             for m in k.meal_set.all():
-        #                 print('\t\t\t', m.name, ': ', m.description)
-        #                 for n in m.ingredient_set.all():
-        #                     print('\t\t\t\t', n.name)
+        print("Running MenuModelsTestCase: test_organization_of_db")
 
         for district in SchoolDistrict.objects.all():
             for school in district.school_set.all():
@@ -97,6 +87,10 @@ class MenuModelsTestCase(TestCase):
 #     def test_login(self):
 #         self.client.login(self.credentials['username'],self.credentials['password'])
 
+
+# menu template test
+# makes sure the correct templates are being used and the correct information is being displayed
+
 # this holds info for a single school
 class SchoolObj:
     def __init__(self, id, name):
@@ -110,15 +104,14 @@ class MenuObj:
         self.name = name
         self.meal_ls = []
 
-    def __str__(self):
-        return self.name
-
 # this holds information for a single meal
 class MealObj:
-    def __init__(self, id, name, description):
+    def __init__(self, id, name, description, prep):
         self.id = id
         self.name = name
         self.description = description
+        self.prep = prep
+        self.ingredient_ls = []
 
 class MenuTemplatesTestCase(TestCase):
     def setUp(self):
@@ -167,6 +160,8 @@ class MenuTemplatesTestCase(TestCase):
                             ingr = 'ingr'
 
     def test_schools_page(self):
+        print("Running MenuTemplatesTestCase: test_schools_page")
+
         sch_context = {
             'school_ls': []
         }
@@ -180,6 +175,8 @@ class MenuTemplatesTestCase(TestCase):
             render_to_string('Lapp/schools.html', sch_context)
 
     def test_meals_page(self):
+        print("Running MenuTemplatesTestCase: test_meals_page")
+
         meal_context = {
             'school': '',
             'menu_ls': [],
@@ -195,7 +192,10 @@ class MenuTemplatesTestCase(TestCase):
                     temp_menu = MenuObj(menu.id, menu.name)
 
                     for item in menu.meal_set.all():
-                        temp_meal = MealObj(item.id, item.name, item.description)
+                        temp_meal = MealObj(item.id, item.name, item.description, item.prep)
+
+                        for ingredient in item.ingredient_set.all():
+                            temp_meal.ingredient_ls.append(ingredient.name)
 
                         temp_menu.meal_ls.append(temp_meal)
 
@@ -206,13 +206,17 @@ class MenuTemplatesTestCase(TestCase):
 
 
     def test_meal_page(self):
+        print("Running MenuTemplatesTestCase: test_meal_page")
+
         item_context = {
             'item': '',
             'error': None
         }
 
         for item in Meal.objects.all():
-            temp_meal = MealObj(item.id, item.name, item.description)
+            temp_meal = MealObj(item.id, item.name, item.description, item.prep)
+            for ingredient in item.ingredient_set.all():
+                temp_meal.ingredient_ls.append(ingredient.name)
             item_context['item'] = temp_meal
             with self.assertTemplateUsed('Lapp/meal_page.html'):
                 render_to_string('Lapp/meal_page.html', item_context)
