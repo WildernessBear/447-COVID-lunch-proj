@@ -6,7 +6,7 @@ from .models import MyUser
 # So, is this all setting up a regular user or an admin? Should that be spread amongst the two files?
 # can it be in a reasonable way, and what bits are needed for that? what about groups? ughhhhhh
 # Unregister the provided model admin
-#admin.site.unregister(MyUser)
+# admin.site.unregister(MyUser)
 
 # Register our own model admin, based on the default UserAdmin
 @admin.register(MyUser)
