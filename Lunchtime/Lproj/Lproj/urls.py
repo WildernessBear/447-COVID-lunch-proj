@@ -22,7 +22,6 @@ urlpatterns = [
     # path('', include(('Lapp.urls', 'Lapp'), namespace='Lapp'))
     path('admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
-    url(r'^special/', views.special, name='special'),
     url(r'^Lapp/', include('Lapp.urls')),
     url(r'^logout/$', views.user_logout, name='logout'),
     path('menu/<int:id>', views.menu_view, name='menu'),

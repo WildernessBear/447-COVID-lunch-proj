@@ -10,12 +10,6 @@ from .models import SchoolDistrict, School, Menu, Meal
 def index(request):
     return render(request, 'Lapp/index.html')
 
-
-@login_required
-def special(request):
-    return HttpResponse("You are logged in !")
-
-
 @login_required
 def user_logout(request):
     logout(request)
@@ -47,14 +41,13 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
-        valid_user = False
+        invalid_user = True
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
                 login(request, user)
-                valid_user = True
                 return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("Your account was inactive.")
@@ -62,7 +55,7 @@ def user_login(request):
             print("Someone tried to login and failed.")
             print("They used username: {} and password: {}".format(username, password))
             # return HttpResponse("Invalid login details given")
-            return render(request, 'Lapp/login.html', {'valid_user': not valid_user})
+            return render(request, 'Lapp/login.html', {'invalid_user': invalid_user})
     else:
         return render(request, 'Lapp/login.html', {})
 
