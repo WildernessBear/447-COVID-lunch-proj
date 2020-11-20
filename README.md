@@ -16,6 +16,16 @@ Minimal functionality now exists. A new user may register and log in, an existin
 - sqlparse == 0.3.1
 
 ## To run the tests:
+Tests using Selenium:
+We're using Firefox as the browser, be aware.
+Requires geckodriver, download from Mozilla's github (https://github.com/mozilla/geckodriver/releases) the appropriate release for your system.
+Unzip and put geckodriver.exe in `Lunchtime/Lproj/`, alongside manage.py
+Selenium will now be functional!
+To run:
+1. Navigate to `Lunchtime/Lproj/`
+2. Enter the command `python manage.py test Lapp.tests`
+These tests are for the general functionality of the website as a whole
+
 Menu tests:
 
 1. **IMPORTANT**: MenuTemplatesTestCase does not work if user login is required. Go to views and comment out `@login_required` above the following lines:
