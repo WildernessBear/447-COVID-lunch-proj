@@ -6,11 +6,16 @@
 <form method="post" action="{% url 'Lapp:user_login' %}">
           {% csrf_token %}
           {# A more "HTML" way of creating the login form#}
-          <label for="username">Username:</label>
-          <input type="text" name="username" placeholder="Username">
-<label for="password">Password:</label>
-          <input type="password" name="password" placeholder="Password">
-<input type="submit" name="" value="Login">
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" placeholder="Username">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" placeholder="Password">
+        <input type="submit" name="LoginButton" value="Login">
+    </form>
+    {% if invalid_user %}
+    <h3 style="color:#ff0033">Invalid Login</h3>
+    {% endif %}
 </form>
 </div>
   </div>
