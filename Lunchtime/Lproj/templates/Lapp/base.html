@@ -7,21 +7,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
   <body>
-    <nav class="navbar navbar-default navbar-static-top">
+   <style>
+    body { background-color: #bace7e; }
+    </style>
+    <nav class="navbar navbar-inverse navbar-static-top" style="background-color:#2e3715;>
       <div class="container">
         <ul class="nav navbar-nav">
 {# Home Link / Admin Link / Register Link / Location-Time Link#}
 
           {# Some logic on what to display for last item#}
           {% if user.is_authenticated %}
-            <li><a class="navbar-brand" href="{% url 'index' %}">Home</a></li>
-            <li><a class="navbar-link" href="{% url 'Lapp:loc_time_menu' %}">Location & Times</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a class="navbar-brand" href="{% url 'index' %}"> Home <span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a class="navbar-link" href="{% url 'Lapp:loc_time_menu' %}"> Location & Times <span class="glyphicon glyphicon-time"></span></a></li>
+            <li><a href="{% url 'logout' %}"> Logout <span class="glyphicon glyphicon-log-in"></span></a></li>
           {% else %}
-            <li><a class="navbar-brand" href="{% url 'index' %}">Home</a></li>
-            <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
-            <li><a class="navbar-link" href="{% url 'Lapp:register' %}">Register</a></li>
-            <li><a class="navbar-link" href="{% url 'Lapp:user_login' %}">Login</a></li>
+            <li><a class="navbar-brand" href="{% url 'index' %}"> Home <span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin <span class="glyphicon glyphicon-lock"></span></a></li>
+            <li><a class="navbar-link" href="{% url 'Lapp:register' %}">Register <span class="glyphicon glyphicon-edit"></span> </a></li>
+            <li><a class="navbar-link" href="{% url 'Lapp:user_login' %}"> Login <span class="glyphicon glyphicon-log-in"></span></a></li>
           {% endif %}
 </ul>
       </div>
