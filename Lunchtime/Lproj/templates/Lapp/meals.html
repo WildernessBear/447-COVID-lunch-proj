@@ -10,7 +10,8 @@ body {font-family: Verdana, sans-serif;}
 .weekday {
     margin: 0;
     padding: 15px 0;
-    background-color: #ddd;
+    background-color: #D88373;
+    color: #5D4954;
 }
 
 .weekday li {
@@ -22,7 +23,7 @@ body {font-family: Verdana, sans-serif;}
 
 .meal {
     padding: 10px 0;
-    background: #eee;
+    background: #8EA8C3;
     margin: 0;
 }
 
@@ -51,15 +52,14 @@ body {font-family: Verdana, sans-serif;}
 </style>
 
 <body>
-<div class="container">
-  <div class="jumbotron">
-    <h1>Pickup Location and Times</h1>
+<div class="jumbotron " style="background-color:#d2e0d0;">
+  <div class="container">
+    <h2> Pickup Location and Times </h2>
       <!-- TO DO: Ideally, "{{ school }}" will link to a location on Maps -->
       <!-- And school, start, and end times will all be user variables -->
-      <h2>{{ user.username }}, you can pick up your meals at
+      <h5>{{ user.username }}, you can pick up your meals at
           <a href="https://theuselessweb.com/">{{ school.name }}</a> from {% for time1 in time1_ls %} {{ time1.name }} {% endfor %}
-          to {% for time2 in time2_ls %} {{ time2.name }} {% endfor %}</h2>
-      <h2>Not your school? Search for your school <a href="{% url 'Lapp:schools_menu' %}">HERE</a></h2>
+          to {% for time2 in time2_ls %} {{ time2.name }} {% endfor %}</h5>
 
       <!-- Displays the days and meals for the given day -->
         <ul class="weekday">
@@ -77,6 +77,9 @@ body {font-family: Verdana, sans-serif;}
             {% endfor %}
             {% endfor %}
         </ul>
+
+      <h6> Not your school? Search for your school <a href="{% url 'Lapp:schools_menu' %}"> HERE</a>.</h6>
+
   </div>
 </div>
 </body>
