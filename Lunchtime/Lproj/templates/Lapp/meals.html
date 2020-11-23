@@ -54,12 +54,12 @@ body {font-family: Verdana, sans-serif;}
 <body>
 <div class="jumbotron " style="background-color:#d2e0d0;">
   <div class="container">
-    <h2> Pickup Location and Times </h2>
-      <!-- TO DO: Ideally, "{{ school }}" will link to a location on Maps -->
-      <!-- And school, start, and end times will all be user variables -->
-      <h5>{{ user.username }}, you can pick up your meals at
-          <a href="https://theuselessweb.com/">{{ school.name }}</a> from {% for time1 in time1_ls %} {{ time1.name }} {% endfor %}
-          to {% for time2 in time2_ls %} {{ time2.name }} {% endfor %}</h5>
+    <h5>{{ user.username }}, </h5>
+      <h5> Here is this weeks information.</h5>
+      <hr class="my-4"/>
+
+      <h1>  </h1>
+      <h2> Menu: </h2>
 
       <!-- Displays the days and meals for the given day -->
         <ul class="weekday">
@@ -78,7 +78,24 @@ body {font-family: Verdana, sans-serif;}
             {% endfor %}
         </ul>
 
-      <h6> Not your school? Search for your school <a href="{% url 'Lapp:schools_menu' %}"> HERE</a>.</h6>
+
+      <h2> Pickup Location: </h2>
+      <!-- TO DO: Ideally, "{{ school }}" will link to a location on Maps -->
+      <!-- And school, start, and end times will all be user variables -->
+      <h5> At <a href="https://theuselessweb.com/">{{ school.name }}</a> </h5>
+
+      <h1>  </h1>
+      <h2> Pickup Time: </h2>
+      <h5> Between {% for time1 in time1_ls %} {{ time1.name }} {% endfor %}
+          to {% for time2 in time2_ls %} {{ time2.name }} {% endfor %}</h5>
+
+
+
+      <h1>  </h1>
+      <style>
+          h6 {text-align: center;}
+      </style>
+      <h6> Not your school? Search for your school <a href="{% url 'Lapp:schools_menu' %}"> here</a>.</h6>
 
   </div>
 </div>

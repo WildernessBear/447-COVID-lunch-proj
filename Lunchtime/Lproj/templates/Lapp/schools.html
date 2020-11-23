@@ -2,10 +2,15 @@
 {% block body_block %}
 <div class="jumbotron " style="background-color:#d2e0d0;">
   <div class="container">
+
+     <style>
+          h2 {text-align: center;}
+      </style>
     <h2>Select a School</h2>
+    <hr class="my-4"/>
 
       {% for school in school_ls %}
-        <h4><a href="{% url 'menu' school.id %}">{{school.name}}</a></h4>
+        <h5><a href="{% url 'menu' school.id %}">{{school.name}}</a></h5>
       {% endfor %}
 
       <!-- <ul>
