@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import School, Meal, SchoolDistrict  # , Time, Menu
+from .models import SchoolDistrict, School, Menu, Meal # , Time
 
 # this holds info for a single school
 class SchoolObj:
@@ -48,12 +48,6 @@ class MealObj:
 
 def index(request):
     return render(request, 'Lapp/index.html')
-
-
-@login_required
-def special():  # Removed: request
-    return HttpResponse("You are logged in !")
-
 
 @login_required
 def user_logout(request):
@@ -172,6 +166,7 @@ def register(request):
 
 def user_login(request):
     if request.method == 'POST':
+        invalid_user = True
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
@@ -184,6 +179,7 @@ def user_login(request):
         else:
             print("Someone tried to login and failed.")
             print("They used username: {} and password: {}".format(username, password))
-            return HttpResponse("Invalid login details given")
+            # return HttpResponse("Invalid login details given")
+            return render(request, 'Lapp/login.html', {'invalid_user': invalid_user})
     else:
         return render(request, 'Lapp/login.html', {})
