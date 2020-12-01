@@ -4,7 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import SchoolDistrict, School, Menu, Meal # , Time
+from django.core.mail import send_mail
+from .models import School, Meal, SchoolDistrict  # , Menu, Time
+
 
 # this holds info for a single school
 class SchoolObj:
@@ -29,8 +31,7 @@ class TimeObj:
     def __init__(self, time_id, name):
         self.id = time_id
         self.name = name
-        self.time1_ls = []
-        self.time2_ls = []
+        self.time_ls = []
 
     def __str__(self):
         return self.name
@@ -49,13 +50,14 @@ class MealObj:
 def index(request):
     return render(request, 'Lapp/index.html')
 
+
 @login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
 
-#@login_required
+# @login_required
 def schools_menu(request):
     context = {
         'school_ls': []
@@ -69,14 +71,13 @@ def schools_menu(request):
     return render(request, 'Lapp/schools.html', context)
 
 
-#@login_required
+# @login_required
 def meals_menu(response, sch_id):
     # this dictionary will be passed to the template
     context = {
         'school': '',
         'menu_ls': [],
-        'time1_ls': [],
-        'time2_ls': [],
+        'time_ls': [],
         'error': None
     }
 
@@ -88,17 +89,12 @@ def meals_menu(response, sch_id):
         context['school'] = temp_school
 
         if school.time_set.exists():
-            for time1 in school.time_set.all():
-                temp_time1 = MenuObj(time1.id, time1.name)
-                context['time1_ls'].append(temp_time1)
-
-            for time2 in school.time_set.all():
-                temp_time2 = MenuObj(time2.id, time2.name)
-                context['time2_ls'].append(temp_time2)
+            for time in school.time_set.all():
+                temp_time = MenuObj(time.id, time.name)
+                context['time_ls'].append(temp_time)
 
         else:
-            context['time1_ls'].append('time1 does not exist')
-            context['time2_ls'].append('time2 does not exist')
+            context['time_ls'].append('time does not exist')
             context['error'] = 'time does not exist'
 
         if school.menu_set.exists():
@@ -127,7 +123,7 @@ def meals_menu(response, sch_id):
     return render(response, 'Lapp/meals.html', context)
 
 
-#@login_required
+# @login_required
 def meal_page(response, item_id):
     context = {
         'meal': '',
@@ -183,3 +179,14 @@ def user_login(request):
             return render(request, 'Lapp/login.html', {'invalid_user': invalid_user})
     else:
         return render(request, 'Lapp/login.html', {})
+
+
+def send_simple_email(request, emailto):
+    res = send_mail("Hello user",  # subject
+                    "This is a reminder to pick up your meal for today",  # message
+                    "conamebiz@gmail.com",  # from_email
+                    ['conamebiz@gmail.com'])  # recipient_list
+
+    return HttpResponse('%s' % res)
+    # send_mail('That’s your subject', 'That’s your message body', 'conamebiz@gmail.com', ['conamebiz@gmail.com'],
+    # fail_silently=False,)
