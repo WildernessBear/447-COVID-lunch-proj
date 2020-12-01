@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from .models import School, Meal, SchoolDistrict  # , Menu, Time
+from .models import School, Meal  # , SchoolDistrict  # , Menu, Time
 
 
 # this holds info for a single school
@@ -181,12 +181,41 @@ def user_login(request):
         return render(request, 'Lapp/login.html', {})
 
 
-def send_simple_email(request, emailto):
-    res = send_mail("Hello user",  # subject
-                    "This is a reminder to pick up your meal for today",  # message
-                    "conamebiz@gmail.com",  # from_email
-                    ['conamebiz@gmail.com'])  # recipient_list
+def send_simple_email(request, emailto, sch_id):
+    # this dictionary will be passed to the template
+    context = {
+        'school': '',
+        'time_ls': [],
+        'error': None
+    }
 
-    return HttpResponse('%s' % res)
-    # send_mail('That’s your subject', 'That’s your message body', 'conamebiz@gmail.com', ['conamebiz@gmail.com'],
-    # fail_silently=False,)
+    if School.objects.filter(pk=sch_id).exists():
+
+        school = School.objects.get(pk=sch_id)
+        temp_school = SchoolObj(school.id, school.name)
+
+        context['school'] = temp_school
+
+        if school.time_set.exists():
+            for time in school.time_set.all():
+                temp_time = MenuObj(time.id, time.name)
+                context['time_ls'].append(temp_time)
+
+            # noinspection PyUnboundLocalVariable
+            res = send_mail("Hello User",  # subject
+                            "This is a reminder to pick up your meal for today at "
+                            + temp_school.name + " until " + time.name,  # message
+                            "conamebiz@gmail.com",  # from_email
+                            [emailto])  # recipient_list
+
+            return HttpResponse('Reminder Sent!')
+
+        else:
+            context['time_ls'].append('time does not exist')
+            context['error'] = 'time does not exist'
+
+    else:
+        context['school'] = 'school does not exist'
+        context['error'] = 'school does not exist'
+
+    return render(request, 'Lapp/meals.html', context)
