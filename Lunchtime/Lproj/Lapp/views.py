@@ -183,3 +183,6 @@ def user_login(request):
             return render(request, 'Lapp/login.html', {'invalid_user': invalid_user})
     else:
         return render(request, 'Lapp/login.html', {})
+
+def faq(request):
+    return render(request, 'Lapp/faq.html', {})

@@ -5,7 +5,7 @@ from .models import SchoolDistrict, School, Menu, Meal, MyUser
 import django.template.loader
 
 # FOR DATABASE TESTS: classes should be subclasses django.test.TestCase
-# ONLY FOR NON-DATABASE TESTS: classes subclasses of unittest.TestCase
+# ONLY FOR NON-DATABASE TESTS: classes subclasses of unittest.TestCase or django.test.SimpleTestCase
 
 # menu models test case
 # makes sure the databases associated with models are organized correctly
