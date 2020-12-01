@@ -28,12 +28,10 @@ These tests are for the general functionality of the website as a whole
 
 Menu tests:
 
-1. **IMPORTANT**: MenuTemplatesTestCase does not work if user login is required. Go to views and comment out `@login_required` above the following lines:
-    ```python
-    def schools_menu(request):
-    def meals_menu(response, sch_id):
-    def meal_page(response, item_id):
-    ```
-2. Navigate to `Lunchtime/Lproj/`
-3. Enter the command `python manage.py test Lapp.test_menu`
+1. Navigate to `Lunchtime/Lproj/`
+2. Enter the command `python manage.py test Lapp.test_menu`
 This test will make sure the databases for lunches are set up properly.
+
+FAQ tests:
+1. Navigate to `Lunchtime/Lproj/`
+3. Enter the command `python manage.py test Lapp.faq`

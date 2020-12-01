@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^schools_menu/$', views.schools_menu, name='schools_menu'),
     path('menu/<int:sch_id>', views.meals_menu, name='menu'),
     path('menu/meal_page/<int:item_id>', views.meal_page, name='meal_page'),
+    path('faq/', views.faq, name="faq"),
 ]
