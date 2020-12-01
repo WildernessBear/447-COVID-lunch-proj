@@ -132,8 +132,9 @@ dmypy.json
 **/.DS_Store
 
 # idea
-.idea
-.idea/
+**/.idea
+**/.idea/
+.idea/447-COVID-lunch-proj.iml
 
 # don't need this
 req.txt
