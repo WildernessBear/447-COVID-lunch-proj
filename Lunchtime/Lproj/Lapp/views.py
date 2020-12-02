@@ -224,14 +224,13 @@ def send_simple_email(request, emailto, sch_id):
 def faq(request):
     return render(request, 'Lapp/faq.html', {})
 
+
 @login_required
 def profile(request):
     submitted = False
     if request.method == 'POST':
         dietary_form = DietaryForm(data=request.POST)
         if dietary_form.is_valid():
-            # save the data
-            milk = dietary_form.save()
             submitted = True
         else:
             print(dietary_form.errors, )

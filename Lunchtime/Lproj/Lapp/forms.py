@@ -10,6 +10,7 @@ class UserForm(forms.ModelForm):
         model = MyUser
         fields = ('username', 'password', 'email')
 
+
 class DietaryForm(forms.ModelForm):
     milk = forms.BooleanField(required=False)
     eggs = forms.BooleanField(required=False)
@@ -24,4 +25,4 @@ class DietaryForm(forms.ModelForm):
 
     class Meta:
         model = Student
-        fields =('milk', 'eggs', 'fish', 'shellfish', 'tree_nuts', 'peanuts', 'wheat', 'soybeans', 'other')
+        fields = ('milk', 'eggs', 'fish', 'shellfish', 'tree_nuts', 'peanuts', 'wheat', 'soybeans', 'other')
