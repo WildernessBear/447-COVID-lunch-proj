@@ -5,16 +5,17 @@
         <style>
             h2 {text-align: center;}
         </style>
-        <h1>Profile</h1>
-        <h3>Hello, {{ user.username }}</h3>
+        <h2>Profile</h2>
+        <hr class="my-4"/>
+        <h4>Hello, {{ user.username }}</h4>
 
         {% if submitted %}
+
 
         {% else %}
         <form enctype="multipart/form-data" method="POST">
             {% csrf_token %}
             <h3>Dietary Restrictions:</h3>
-            {{ user_form.as_p }}
             {{ dietary_form.as_p }}
             <input type="submit" name="ProfileButton" value="Submit">
         </form>
