@@ -89,8 +89,8 @@ body {font-family: Verdana, sans-serif;}
       <h2> Pickup Time: </h2>
       <h5> Between {{ time_ls.0 }} to {{ time_ls.1}}</h5>
 
-    
-      <h2><a href="{% url 'send_simple_email' user.email school.id %}"> Click here to get reminded </a></h2>
+      <h2> Receive E-mail Reminders: </h2>
+      <h5><a href="{% url 'send_simple_email' user.email school.id %}"> Sign me up. </a></h5>
 
       <h1>  </h1>
       <style>
