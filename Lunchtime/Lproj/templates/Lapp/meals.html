@@ -57,9 +57,10 @@ body {font-family: Verdana, sans-serif;}
       <!-- TO DO: Ideally, "{{ school }}" will link to a location on Maps -->
       <!-- And school, start, and end times will all be user variables -->
       <h2>{{ user.username }}, you can pick up your meals at
-          <a href="https://theuselessweb.com/">{{ school.name }}</a> from {% for time1 in time1_ls %} {{ time1.name }} {% endfor %}
-          to {% for time2 in time2_ls %} {{ time2.name }} {% endfor %}</h2>
+          <a href="https://theuselessweb.com/">{{ school.name }}</a> from {{ time_ls.0 }} to {{ time_ls.1}}</h2>
       <h2>Not your school? Search for your school <a href="{% url 'Lapp:schools_menu' %}">HERE</a></h2>
+
+      <h2><a href="{% url 'send_simple_email' user.email school.id %}">Get reminded</a></h2>
 
       <!-- Displays the days and meals for the given day -->
         <ul class="weekday">

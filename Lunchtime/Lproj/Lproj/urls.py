@@ -27,5 +27,7 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     path('menu/<int:sch_id>', views.meals_menu, name='menu'),
     path('menu/meal_page/<int:item_id>', views.meal_page, name='meal_page'),
+    path('simpleemail/<emailto>/<int:sch_id>', views.send_simple_email,
+         name='send_simple_email'),
     path('faq/', views.faq, name='faq'),
 ]
