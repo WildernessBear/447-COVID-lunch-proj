@@ -57,7 +57,7 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 
-# @login_required
+@login_required
 def schools_menu(request):
     context = {
         'school_ls': []
@@ -71,7 +71,7 @@ def schools_menu(request):
     return render(request, 'Lapp/schools.html', context)
 
 
-# @login_required
+@login_required
 def meals_menu(response, sch_id):
     # this dictionary will be passed to the template
     context = {
@@ -123,7 +123,7 @@ def meals_menu(response, sch_id):
     return render(response, 'Lapp/meals.html', context)
 
 
-# @login_required
+@login_required
 def meal_page(response, item_id):
     context = {
         'meal': '',
@@ -219,3 +219,7 @@ def send_simple_email(request, emailto, sch_id):
         context['error'] = 'school does not exist'
 
     return render(request, 'Lapp/meals.html', context)
+
+ 
+def faq(request):
+    return render(request, 'Lapp/faq.html', {})
