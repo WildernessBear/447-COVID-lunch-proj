@@ -1,0 +1,25 @@
+{% extends "Lapp/base.html" %}
+{% block body_block %}
+<div class="jumbotron " style="background-color:#d2e0d0;">
+    <div class="container">
+        <style>
+            h2 {text-align: center;}
+        </style>
+        <h1>Profile</h1>
+        <h3>Hello, {{ user.username }}</h3>
+
+        {% if submitted %}
+
+        {% else %}
+        <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            <h3>Dietary Restrictions:</h3>
+            {{ user_form.as_p }}
+            {{ dietary_form.as_p }}
+            <input type="submit" name="ProfileButton" value="Submit">
+        </form>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

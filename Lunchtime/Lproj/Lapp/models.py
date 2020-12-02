@@ -6,6 +6,18 @@ from django.db import models
 class MyUser(AbstractUser):
     pass
 
+class Student(models.Model):
+    school = models.CharField(max_length=100)
+    milk = False
+    eggs = False
+    fish = False
+    shellfish = False
+    tree_nuts = False
+    peanuts = False
+    wheat = False
+    soybeans = False
+    other = models.CharField(max_length=250)
+
 
 class SchoolDistrict(models.Model):
     objects = None
