@@ -1,17 +1,26 @@
 {% extends "Lapp/base.html" %}
 {% block body_block %}
 
-    <h1>{{ meal.name }}</h1>
+<div class="jumbotron " style="background-color:#d2e0d0;">
+  <div class="container">
 
-    <h3>Description</h3>
-    <p>{{ meal.description }}</p>
+      <style>
+          h2 {text-align: center;}
+      </style>
+      <h2>{{ meal.name }}</h2>
+      <hr class="my-4"/>
 
-    <h3>Ingredients</h3>
-    {% for ingredient in meal.ingredient_ls %}
-    <p>{{ ingredient }}</p>
-    {% endfor %}
+      <h3>Description</h3>
+      <h5>{{ meal.description }}</h5>
 
-    <h3>Preparation</h3>
-    <p>{{ meal.prep }}</p>
+      <h3>Ingredients</h3>
+      {% for ingredient in meal.ingredient_ls %}
+      <h5>{{ ingredient }}</h5>
+      {% endfor %}
 
+      <h3>Preparation</h3>
+      <h5>{{ meal.prep }}</h5>
+
+  </div>
+</div>
 {% endblock %}

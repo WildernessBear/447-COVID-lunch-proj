@@ -6,31 +6,31 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-</head>
+  </head>
   <body>
-   <style>
-    body { background-color: #bace7e; }
-    </style>
-    <nav class="navbar navbar-inverse navbar-static-top" style="background-color:#2e3715;>
+   <style> body { background-color: #8DA7BE } </style>
+    <nav class="navbar navbar-inverse navbar-static-top" style="background-color:#3A302C; >
       <div class="container">
         <ul class="nav navbar-nav">
-{# Home Link / Admin Link / Register Link / Meals Link#}
+            {# Home Link / Admin Link / Register Link / Meals Link#}
 
           {# Some logic on what to display for last item#}
           {% if user.is_authenticated %}
             <li><a class="navbar-brand" href="{% url 'index' %}"> Home <span class="glyphicon glyphicon-home"></span></a></li>
             <!-- <li><a class="navbar-link" href="{% url 'Lapp:meals_menu' %}">Meals</a></li> -->
-            <li><a class="navbar-link" href="{% url 'Lapp:schools_menu' %}">Schools</a></li>
-            <li><a class="navbar-link" href="{% url 'Lapp:faq' %}">FAQ</a></li>
+
+            <li><a class="navbar-link" href="{% url 'Lapp:schools_menu' %}"> Schools <span class="glyphicon glyphicon-info-sign"></span></a></li>
+            <li><a class="navbar-link" href="{% url 'Lapp:faq' %}"> FAQ </a></li>
+
             <li><a href="{% url 'logout' %}"> Logout <span class="glyphicon glyphicon-log-in"></span></a></li>
 
           {% else %}
             <li><a class="navbar-brand" href="{% url 'index' %}"> Home <span class="glyphicon glyphicon-home"></span></a></li>
-            <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin <span class="glyphicon glyphicon-lock"></span></a></li>
-            <li><a class="navbar-link" href="{% url 'Lapp:register' %}">Register <span class="glyphicon glyphicon-edit"></span> </a></li>
+            <li><a class="navbar-link" href="{% url 'admin:index' %}"> Admin <span class="glyphicon glyphicon-lock"></span></a></li>
+            <li><a class="navbar-link" href="{% url 'Lapp:register' %}"> Register <span class="glyphicon glyphicon-edit"></span> </a></li>
             <li><a class="navbar-link" href="{% url 'Lapp:user_login' %}"> Login <span class="glyphicon glyphicon-log-in"></span></a></li>
           {% endif %}
-</ul>
+        </ul>
       </div>
     </nav>
     <div class="container">
