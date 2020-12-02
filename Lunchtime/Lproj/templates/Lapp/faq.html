@@ -1,0 +1,17 @@
+{% extends "Lapp/base.html" %}
+{% block body_block %}
+<div class="container">
+  <div class="jumbotron">
+    <h1>FAQ</h1>
+
+    <h3>Does my child qualify for free meals?</h3>
+    <p>what actually are the qualifications</p>
+
+    <h3>How do I sign up my child for free meals?</h3>
+    <p>I don't know what to put on this page</p>
+
+    <h3>Where/when do I pick up a meal?</h3>
+    <p>Find the pick up times and locations for your school <a class="navbar-link" href="{% url 'Lapp:schools_menu' %}">here</a>!</p>
+  </div>
+</div>
+{% endblock %}

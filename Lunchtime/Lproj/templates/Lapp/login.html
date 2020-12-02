@@ -1,22 +1,27 @@
 {% extends 'Lapp/base.html' %}
 {% block body_block %}
-  <div class="container">
-    <div class="jumbotron">
-      <h1>Login here :</h1>
-<form method="post" action="{% url 'Lapp:user_login' %}">
+
+<div class="container">
+    <div class="jumbotron " style="background-color:#d2e0d0;">
+
+      <h3>Login here :</h3>
+        <form method="post" action="{% url 'Lapp:user_login' %}">
           {% csrf_token %}
           {# A more "HTML" way of creating the login form#}
     <form>
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" placeholder="Username">
-        <label for="password">Password:</label>
+        <label for="password"> Password: </label>
         <input type="password" name="password" id="password" placeholder="Password">
         <input type="submit" name="LoginButton" value="Login">
     </form>
+
     {% if invalid_user %}
-    <h3 style="color:#ff0033">Invalid Login</h3>
+    <h4 style="color:#cf082e"> Invalid Login - Please Try Again </h4>
     {% endif %}
-</form>
+
+        </form>
+    </div>
 </div>
-  </div>
+
 {% endblock %}

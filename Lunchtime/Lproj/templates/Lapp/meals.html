@@ -10,7 +10,8 @@ body {font-family: Verdana, sans-serif;}
 .weekday {
     margin: 0;
     padding: 15px 0;
-    background-color: #ddd;
+    background-color: #687E79;
+    color: #eee;
 }
 
 .weekday li {
@@ -22,7 +23,7 @@ body {font-family: Verdana, sans-serif;}
 
 .meal {
     padding: 10px 0;
-    background: #eee;
+    background: #BBC9C8;
     margin: 0;
 }
 
@@ -51,15 +52,15 @@ body {font-family: Verdana, sans-serif;}
 </style>
 
 <body>
-<div class="container">
-  <div class="jumbotron">
-    <h1>Pickup Location and Times</h1>
-      <!-- TO DO: Ideally, "{{ school }}" will link to a location on Maps -->
-      <!-- And school, start, and end times will all be user variables -->
-      <h2>{{ user.username }}, you can pick up your meals at
-          <a href="https://theuselessweb.com/">{{ school.name }}</a> from {% for time1 in time1_ls %} {{ time1.name }} {% endfor %}
-          to {% for time2 in time2_ls %} {{ time2.name }} {% endfor %}</h2>
-      <h2>Not your school? Search for your school <a href="{% url 'Lapp:schools_menu' %}">HERE</a></h2>
+
+<div class="jumbotron " style="background-color:#d2e0d0;">
+  <div class="container">
+    <h5>{{ user.username }}, </h5>
+      <h5> Here is this weeks information.</h5>
+      <hr class="my-4"/>
+
+      <h1>  </h1>
+      <h2> Menu: </h2>
 
       <!-- Displays the days and meals for the given day -->
         <ul class="weekday">
@@ -77,6 +78,27 @@ body {font-family: Verdana, sans-serif;}
             {% endfor %}
             {% endfor %}
         </ul>
+
+
+      <h2> Pickup Location: </h2>
+      <!-- TO DO: Ideally, "{{ school }}" will link to a location on Maps -->
+      <!-- And school, start, and end times will all be user variables -->
+      <h5> At <a href="https://theuselessweb.com/">{{ school.name }}</a> </h5>
+
+      <h1>  </h1>
+      <h2> Pickup Time: </h2>
+      <h5> Between {% for time1 in time1_ls %} {{ time1.name }} {% endfor %}
+          to {% for time2 in time2_ls %} {{ time2.name }} {% endfor %}</h5>
+
+    
+      <h2><a href="{% url 'send_simple_email' user.email school.id %}"> Click here to get reminded </a></h2>
+
+      <h1>  </h1>
+      <style>
+          h6 {text-align: center;}
+      </style>
+      <h6> Not your school? Search for your school <a href="{% url 'Lapp:schools_menu' %}"> here</a>.</h6>
+
   </div>
 </div>
 </body>

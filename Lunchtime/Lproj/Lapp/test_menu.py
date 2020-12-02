@@ -1,11 +1,12 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
 from django.template.loader import render_to_string
 from django.test import TestCase, Client
 from .models import SchoolDistrict, School, Menu, Meal, MyUser
 import django.template.loader
 
 # FOR DATABASE TESTS: classes should be subclasses django.test.TestCase
-# ONLY FOR NON-DATABASE TESTS: classes subclasses of unittest.TestCase
+# ONLY FOR NON-DATABASE TESTS: classes subclasses of unittest.TestCase or django.test.SimpleTestCase
 
 # menu models test case
 # makes sure the databases associated with models are organized correctly
@@ -73,19 +74,6 @@ class MenuModelsTestCase(TestCase):
                         self.assertEqual(menu.id, meal.menu.id)
                         for ingredient in meal.ingredient_set.all():
                             self.assertEqual(meal.id, ingredient.meal.id)
-
-# class MenuTemplatesTestCase(TestCase):
-#     def setUp(self):
-#         self.client = Client()
-#         self.credentials = {
-#             'username': 'george',
-#             'password': 'secret',
-#             'email': 'email@gmail.com'
-#         }
-#         self.user = MyUser.objects.create(username = self.credentials['username'], email = self.credentials['email'],password = self.credentials['password'])
-#
-#     def test_login(self):
-#         self.client.login(self.credentials['username'],self.credentials['password'])
 
 
 # menu template test
@@ -159,6 +147,17 @@ class MenuTemplatesTestCase(TestCase):
                             temp_meal.ingredient_set.create(name=ingr)
                             ingr = 'ingr'
 
+        # set up a user & log in
+        self.client = Client()
+        self.credentials = {
+             'username': 'george',
+             'password': 'secret',
+             'email': 'email@gmail.com'}
+        self.user = MyUser.objects.create(username=self.credentials['username'], email=self.credentials['email'], password=self.credentials['password'])
+        user = authenticate(username=self.credentials['username'], password=self.credentials['password'])
+        if user:
+            self.client.login(username=self.credentials['username'], password=self.credentials['password'])
+
     def test_schools_page(self):
         print("Running MenuTemplatesTestCase: test_schools_page")
 
@@ -220,3 +219,4 @@ class MenuTemplatesTestCase(TestCase):
             item_context['item'] = temp_meal
             with self.assertTemplateUsed('Lapp/meal_page.html'):
                 render_to_string('Lapp/meal_page.html', item_context)
+
