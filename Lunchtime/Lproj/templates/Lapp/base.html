@@ -9,7 +9,7 @@
   </head>
   <body>
    <style> body { background-color: #8DA7BE } </style>
-    <nav class="navbar navbar-inverse navbar-static-top" style="background-color:#3A302C; >
+    <nav class="navbar navbar-inverse navbar-static-top" style="background-color:#3A302C; ">
       <div class="container">
         <ul class="nav navbar-nav">
             {# Home Link / Admin Link / Register Link / Meals Link#}
@@ -21,6 +21,7 @@
 
             <li><a class="navbar-link" href="{% url 'Lapp:schools_menu' %}"> Schools <span class="glyphicon glyphicon-info-sign"></span></a></li>
             <li><a class="navbar-link" href="{% url 'Lapp:faq' %}"> FAQ <span class="glyphicon glyphicon-question-sign"></span></a></li>
+            <li><a class="navbar-link" href="{% url 'Lapp:profile'%}"> Profile <span class="glyphicon glyphicon-info-sign"></span></a></li>
 
             <li><a href="{% url 'logout' %}"> Logout <span class="glyphicon glyphicon-log-in"></span></a></li>
 
