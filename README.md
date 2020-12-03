@@ -1,6 +1,6 @@
 # 447-COVID-lunch-proj
 
-Minimal functionality now exists. A new user may register and log in, an existing user may log in, and an admin may log in either at the site itself or to the admin page.
+Now in a more stable state. A new user may register and log in, an existing user may log in, and an admin may log in either at the site itself or to the admin page. A user, once logged in, can check a FAQ page, update their profile with their student's dietary restrictions, or can select their school and find that week's menu (with included ingredient lists), pick-up location and time, and an option to register for e-mail reminders for pick-ups.
 
 ## To run the program:
 1. Navigate to `Lunchtime/Lproj/` on your command line
