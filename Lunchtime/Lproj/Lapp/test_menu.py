@@ -143,8 +143,8 @@ class MenuTemplatesTestCase(TestCase):
         description = 'description goes here'
         prep = 'prep goes here'
         ingr = 'ingr'
-        time1 = 'T0:00 AM'
-        time2 = 'T0:00 PM'
+        time1 = '0:00 AM'
+        time2 = '0:00 PM'
 
         # create districts
         for i in range(self.num_districts):
@@ -160,9 +160,9 @@ class MenuTemplatesTestCase(TestCase):
 
             # create times for each school
             for k in range(self.num_time):
-                time1 = 'T' + str(i) + ':' + str(j) + str(k) + 'AM'
+                time1 = str(i) + ':' + str(j) + str(k) + 'AM'
                 temp_time1 = temp_school.time_set.create(name=time1)
-                time2 = 'T' + str(i) + ':' + str(j) + str(k) + 'PM'
+                time2 = str(i) + ':' + str(j) + str(k) + 'PM'
                 temp_time2 = temp_school.time_set.create(name=time2)
 
                 # create menus for each school
