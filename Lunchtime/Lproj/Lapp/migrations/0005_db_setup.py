@@ -36,13 +36,13 @@ def set_up_db(apps, schema_editor):
     menu = ["Breakfast", "Lunch"]
 
     lunch_main_ls = [
-        Item("Cheese Pizza", main, prep1,
+        Item("Cheese Pizza", main, None,
              ["whole grain crust", "tomato sauce", "mozzarella cheese"]),
-        Item("Pepperoni Pizza", main, prep1,
+        Item("Pepperoni Pizza", main, None,
              ["whole grain crust", "tomato sauce", "mozzarella cheese", "pepperoni"]),
-        Item("Chicken Patty Sandwich", main, prep1,
+        Item("Chicken Patty Sandwich", main, None,
              ["chicken breast patty", "hamburger bun", "lettuce", "tomato"]),
-        Item("PB & J Sandwich", main, prep1,
+        Item("PB & J Sandwich", main, None,
              ["peanut butter", "grape jelly", "whole grain bread"])
     ]
 
