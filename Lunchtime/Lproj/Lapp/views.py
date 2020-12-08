@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from .models import School, Meal  # , SchoolDistrict  # , Menu, Time
+from .models import School, Meal, Menu  # , SchoolDistrict  # , Menu, Time
 
 
 # this holds info for a single school
@@ -77,6 +77,8 @@ def meals_menu(response, sch_id):
     context = {
         'school': '',
         'menu_ls': [],
+        'breakfast_ls': [],
+        'lunch_ls': [],
         'time_ls': [],
         'error': None
     }
@@ -101,15 +103,19 @@ def meals_menu(response, sch_id):
             for menu in school.menu_set.all():
                 temp_menu = MenuObj(menu.id, menu.name)
 
-                for meal in menu.meal_set.all():
-                    temp_meal = MealObj(meal.id, meal.name, meal.description, meal.prep)
+                # for meal in menu.meal_set.all():
+                #     temp_meal = MealObj(meal.id, meal.name, meal.description, meal.prep)
+                #
+                #     if meal.ingredient_set.exists():
+                #         for ingredient in meal.ingredient_set.all():
+                #             temp_meal.ingredient_ls.append(ingredient.name)
+                #
+                #     temp_menu.meal_ls.append(temp_meal)
 
-                    if meal.ingredient_set.exists():
-                        for ingredient in meal.ingredient_set.all():
-                            temp_meal.ingredient_ls.append(ingredient.name)
-
-                    temp_menu.meal_ls.append(temp_meal)
-
+                if(temp_menu.name == 'Lunch'):
+                    context['lunch_ls'].append(temp_menu)
+                else:
+                    context['breakfast_ls'].append(temp_menu)
                 context['menu_ls'].append(temp_menu)
 
         else:
@@ -140,6 +146,37 @@ def meal_page(response, item_id):
     context['meal'] = temp_meal
 
     return render(response, 'Lapp/meal_page.html', context)
+
+
+@login_required
+def menu_page(response, item_id):
+    context = {
+        'menu': '',
+        'main': '',
+        'side_ls': [],
+        'drink_ls': [],
+        'error': None
+    }
+
+    temp_menu = Menu.objects.get(pk=item_id)
+
+    for meal in temp_menu.meal_set.all():
+        temp_meal = MealObj(meal.id, meal.name, meal.description, meal.prep)
+
+        if meal.ingredient_set.exists():
+            for ingredient in meal.ingredient_set.all():
+                temp_meal.ingredient_ls.append(ingredient.name)
+
+        if meal.description == 'main':
+            context['main'] = temp_meal
+        elif meal.description == 'side':
+            context['side_ls'].append(temp_meal)
+        elif meal.description == 'drink':
+            context['drink_ls'].append(temp_meal)
+
+    context['menu'] = temp_menu.name
+
+    return render(response, 'Lapp/menu_page.html', context)
 
 
 def register(request):
