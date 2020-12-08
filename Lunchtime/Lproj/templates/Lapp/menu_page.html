@@ -19,11 +19,15 @@
       <h3>Sides</h3>
       {% for item in side_ls %}
       <h4>{{ item.name }}</h4>
+      <h5>Ingredients: {% for ingredient in item.ingredient_ls %} {{ ingredient }}, {% endfor %}</h5>
+      {% if main.prep %}
+      <h5>Preparation: {{ main.prep }} </h5>
+      {% endif %}
       {% endfor %}
 
       <h3>Drinks</h3>
       {% for item in drink_ls %}
-      <h4>{{ item.name }}</h4>
+      <h5>{{ item.name }}</h5>
       {% endfor %}
 
 
