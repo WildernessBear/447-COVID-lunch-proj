@@ -8,9 +8,7 @@
         <h2>Profile</h2>
         <hr class="my-4"/>
         <h4>Hello, {{ user.username }}</h4>
-
         {% if submitted %}
-
 
         {% else %}
         <form enctype="multipart/form-data" method="POST">
@@ -20,7 +18,6 @@
             <input type="submit" name="ProfileButton" value="Submit">
         </form>
         {% endif %}
-
     </div>
 </div>
 {% endblock %}

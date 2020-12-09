@@ -6,6 +6,7 @@ from django.db import models
 class MyUser(AbstractUser):
     pass
 
+
 class Student(models.Model):
     school = models.CharField(max_length=100)
     milk = False
