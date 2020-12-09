@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
 from .forms import UserForm, DietaryForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from .models import School, Meal  # , SchoolDistrict  # , Menu, Time
+from .models import School, Meal, SchoolDistrict, Student  # , SchoolDistrict  # , Menu, Time
 
 
 # this holds info for a single school
@@ -226,14 +228,103 @@ def faq(request):
 
 
 @login_required
-def profile(request):
+def update_profile(request):
     submitted = False
     if request.method == 'POST':
         dietary_form = DietaryForm(data=request.POST)
         if dietary_form.is_valid():
             submitted = True
         else:
-            print(dietary_form.errors, )
+            print(dietary_form.errors )
     else:
         dietary_form = DietaryForm()
-    return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form, 'submitted': submitted})
+    return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form,
+                                                 'submitted': submitted})
+
+@login_required
+def show_profile(request):
+    # we don't want all students - just one. How to do one student at a time?
+    students = Student.objects.all()
+    context = students
+    return render(request, 'Lapp/profile.html', context)
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'Lapp/password_change.html', {
+        'form': form
+    })
+
+## The current example database was created with this function: ##
+
+# makes an example database
+# breakdown of temp databases:
+#   10 districts
+#   each district has 10 schools
+#   each school has 2 menus
+#   each menu has 3 items
+#   each meal has 3 ingredients
+
+
+def set_up_db():
+    num_districts = 3
+    num_schools = 4
+    num_menus = 2
+    num_items = 5
+    num_ingredients = 5
+    num_time = 1
+
+    # district = 'District'
+    # school = 'School'
+    # menu = 'Menu'
+    # item = 'Item'
+    description = 'description goes here'
+    prep = 'preparation goes here'
+    # ingredient = 'ingredient'
+    # time1 = 'TI:ME AM'
+    # time2 = 'TI:ME PM'
+
+    # create districts
+    for i in range(num_districts):
+        district = 'District' + str(i)
+        temp_district = SchoolDistrict.objects.create(name=district)
+
+        # create schools in each district
+        for j in range(num_schools):
+            school = 'School' + str(i) + '.' + str(j)
+            temp_school = temp_district.school_set.create(name=school)
+
+            # create times for each school
+            for k in range(num_time):
+                time1 = 'T' + str(i) + ':' + str(j) + str(k) + 'AM'
+                temp_time1 = temp_school.time_set.create(name=time1)
+                time2 = 'T' + str(i) + ':' + str(j) + str(k) + 'PM'
+                temp_time2 = temp_school.time_set.create(name=time2)
+
+            # create menus for each school
+            for k in range(num_menus):
+                menu = 'menu' + str(i) + '.' + str(j) + '.' + str(k)
+                temp_menu = temp_school.menu_set.create(name=menu)
+
+                # create items for each menu
+                for m in range(num_items):
+                    item = 'item' + str(i) + '.' + str(j) + '.' + str(k) + '.' + str(m)
+                    temp_item = temp_menu.meal_set.create(name=item, description=description, prep=prep)
+
+                    # create ingredients for each item
+                    for n in range(num_ingredients):
+                        ingredient = 'ingredient' + str(i) + '.' + str(j) + '.' + str(k) + '.' + str(m) + '.' + str(n)
+                        temp_item.ingredient_set.create(name=ingredient)
+
+
+set_up_db()
