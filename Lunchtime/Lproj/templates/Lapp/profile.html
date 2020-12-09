@@ -15,6 +15,13 @@
         {% else %}
         <form enctype="multipart/form-data" method="POST">
             {% csrf_token %}
+            <h3>Please indicate your school:</h3>
+            {{ school_form.as_p }}
+            <input type="submit" name="ProfileButton" value="Submit">
+        </form>
+
+        <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
             <h3>Please indicate any dietary restrictions:</h3>
             {{ dietary_form.as_p }}
             <input type="submit" name="ProfileButton" value="Submit">

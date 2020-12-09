@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import UserForm, DietaryForm
+from .forms import UserForm, DietaryForm, SchoolForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -273,6 +273,16 @@ def profile(request):
             submitted = True
         else:
             print(dietary_form.errors, )
+
+        school_form = SchoolForm(data=request.POST)
+        if school_form.is_valid():
+            # save the data
+            school_form.save()
+            submitted = True
+        else:
+            print(school_form.errors, )
     else:
         dietary_form = DietaryForm()
-    return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form, 'submitted': submitted})
+        school_form = SchoolForm()
+    return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form, 'school_form': school_form,
+                                                 'submitted': submitted})
