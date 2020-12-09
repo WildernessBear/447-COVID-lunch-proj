@@ -1,17 +1,17 @@
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
-from .forms import UserForm, DietaryForm
+from .forms import UserForm, DietaryForm, SchoolForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from .models import School, Meal, Menu, # SchoolDistrict, Student  # , SchoolDistrict  # , Menu, Time
-
-
+from .models import School, Meal, Menu # SchoolDistrict, Student, Time
 
 # this holds info for a single school
+
+
 class SchoolObj:
     def __init__(self, school_id, name):
         self.id = school_id
@@ -288,8 +288,6 @@ def update_profile(request):
         dietary_form = DietaryForm()
         school_form = SchoolForm()
     return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form, 'school_form': school_form,
-                                                 'submitted': submitted})
-    return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form,
                                                  'submitted': submitted})
 
 
