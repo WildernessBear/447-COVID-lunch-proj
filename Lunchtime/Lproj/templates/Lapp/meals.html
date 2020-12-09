@@ -51,6 +51,8 @@ body {font-family: Verdana, sans-serif;}
 }
 </style>
 
+<style> h6 {text-align: center;} </style>
+
 <body>
 
 <div class="jumbotron " style="background-color:#d2e0d0;">
@@ -94,9 +96,6 @@ body {font-family: Verdana, sans-serif;}
       <h5><a href="{% url 'send_simple_email' user.email school.id %}"> Sign me up. </a></h5>
 
       <h1>  </h1>
-      <style>
-          h6 {text-align: center;}
-      </style>
       <h6> Not your school? Search for your school <a href="{% url 'Lapp:schools_menu' %}"> here</a>.</h6>
 
   </div>
