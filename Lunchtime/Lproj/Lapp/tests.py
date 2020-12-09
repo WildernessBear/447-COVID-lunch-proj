@@ -1,14 +1,8 @@
-import os
-import unittest
-import time
 from django.test import TestCase
-from django.test import LiveServerTestCase
-import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as ec
 
 # Create your tests here.
 
@@ -48,7 +42,7 @@ class FunctionalTests(TestCase):
 
         # verify that the user has been logged in
         WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.ID, 'Registered'))
+            ec.presence_of_element_located((By.ID, 'Registered'))
         )
 
         # Log that user in
@@ -66,7 +60,7 @@ class FunctionalTests(TestCase):
 
         # verify that the user has been logged in
         WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.ID, 'LoggedIn'))
+            ec.presence_of_element_located((By.ID, 'LoggedIn'))
         )
 
     # register an admin and log them in - not yet relevant

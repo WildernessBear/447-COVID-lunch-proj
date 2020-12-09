@@ -6,6 +6,7 @@ from django.db import models
 class MyUser(AbstractUser):
     pass
 
+
 class Student(models.Model):
     school = models.CharField(max_length=100)
     milk = False
@@ -38,6 +39,7 @@ class School(models.Model):
 
 # menu for maybe the day of the week??
 class Menu(models.Model):
+    objects = None
     school = models.ForeignKey(School, on_delete=models.CASCADE, null=False)
     name = models.CharField(max_length=80)
 

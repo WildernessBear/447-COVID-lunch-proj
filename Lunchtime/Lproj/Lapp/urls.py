@@ -14,5 +14,7 @@ urlpatterns = [
     path('menu/meal_page/<int:item_id>', views.meal_page, name='meal_page'),
     path('menu/menu_page/<int:item_id>', views.menu_page, name='menu_page'),
     path('faq/', views.faq, name='faq'),
-    path('profile/', views.profile, name='profile'),
+    path('profile/', views.update_profile, name='profile'),
+    url(r'^change_password/$', views.change_password, name='change_password'),
+
 ]

@@ -1,14 +1,17 @@
-from django.shortcuts import render
-from .forms import UserForm, DietaryForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
+from .forms import UserForm, DietaryForm, SchoolForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from .models import School, Meal, Menu  # , SchoolDistrict  # , Menu, Time
-
+from .models import School, Meal, Menu # SchoolDistrict, Student, Time
 
 # this holds info for a single school
+
+
 class SchoolObj:
     def __init__(self, school_id, name):
         self.id = school_id
@@ -112,7 +115,7 @@ def meals_menu(response, sch_id):
                 #
                 #     temp_menu.meal_ls.append(temp_meal)
 
-                if(temp_menu.name == 'Lunch'):
+                if temp_menu.name == 'Lunch':
                     context['lunch_ls'].append(temp_menu)
                 else:
                     context['breakfast_ls'].append(temp_menu)
@@ -239,11 +242,11 @@ def send_simple_email(request, emailto, sch_id):
                 context['time_ls'].append(temp_time)
 
             # noinspection PyUnboundLocalVariable
-            res = send_mail("Hello User",  # subject
-                            "This is a reminder to pick up your meal for today at "
-                            + temp_school.name + " until " + time.name,  # message
-                            "conamebiz@gmail.com",  # from_email
-                            [emailto])  # recipient_list
+            send_mail("Hello User",  # subject
+                      "This is a reminder to pick up your meal for today at "
+                      + temp_school.name + " until " + time.name,  # message
+                      "conamebiz@gmail.com",  # from_email
+                      [emailto])
 
             return HttpResponse('Reminder Sent!')
 
@@ -261,17 +264,46 @@ def send_simple_email(request, emailto, sch_id):
 def faq(request):
     return render(request, 'Lapp/faq.html', {})
 
+
 @login_required
-def profile(request):
+def update_profile(request):
     submitted = False
     if request.method == 'POST':
         dietary_form = DietaryForm(data=request.POST)
         if dietary_form.is_valid():
             # save the data
-            milk = dietary_form.save()
+            dietary_form.save()
             submitted = True
         else:
             print(dietary_form.errors, )
+
+        school_form = SchoolForm(data=request.POST)
+        if school_form.is_valid():
+            # save the data
+            school_form.save()
+            submitted = True
+        else:
+            print(school_form.errors, )
     else:
         dietary_form = DietaryForm()
-    return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form, 'submitted': submitted})
+        school_form = SchoolForm()
+    return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form, 'school_form': school_form,
+                                                 'submitted': submitted})
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'Lapp/password_change.html', {
+        'form': form
+    })

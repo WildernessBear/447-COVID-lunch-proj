@@ -1,11 +1,10 @@
 {% extends "Lapp/base.html" %}
 {% block body_block %}
 
+<style> h2 {text-align: center;} </style>
+
 <div class="jumbotron " style="background-color:#d2e0d0;">
   <div class="container">
-      <style>
-          h2 {text-align: center;}
-      </style>
       <h2>{{ menu }}</h2>
       <hr class="my-4"/>
 
@@ -29,9 +28,6 @@
       {% for item in drink_ls %}
       <h5>{{ item.name }}</h5>
       {% endfor %}
-
-
-
   </div>
 </div>
 {% endblock %}

@@ -31,5 +31,6 @@ urlpatterns = [
     path('simpleemail/<emailto>/<int:sch_id>', views.send_simple_email,
          name='send_simple_email'),
     path('faq/', views.faq, name='faq'),
-    path('profile/', views.profile, name='profile'),
+    path('profile/', views.update_profile, name='profile'),
+    url(r'^change_password/$', views.change_password, name='change_password'),
 ]

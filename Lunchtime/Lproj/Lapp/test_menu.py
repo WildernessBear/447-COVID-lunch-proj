@@ -1,10 +1,8 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate  # , login, logout
 from django.template.loader import render_to_string
 from django.test import TestCase, Client
-from .models import SchoolDistrict, School, Menu, Meal, MyUser
-import django.template.loader
-
+from .models import SchoolDistrict, School, Meal, MyUser  # , Menu
+import random
 
 # FOR DATABASE TESTS: classes should be subclasses django.test.TestCase
 # ONLY FOR NON-DATABASE TESTS: classes subclasses of unittest.TestCase or django.test.SimpleTestCase
@@ -17,75 +15,159 @@ import django.template.loader
 #   each school has 2 menus
 #   each menu has 3 items
 #   each item has 3 ingredients
-class MenuModelsTestCase(TestCase):
-    def setUp(self):
-        self.num_districts = 10
-        self.num_schools = 10
-        self.num_menus = 2
-        self.num_items = 3
-        self.num_ingredients = 3
 
-        district = 'district'
-        school = 'school'
-        menu = 'menu'
-        item = 'item'
-        description = 'description goes here'
-        prep = 'prep goes here'
-        ingr = 'ingr'
-        time1 = 'time1'
-        time2 = 'time2'
 
-        # create districts
-        for i in range(self.num_districts):
-            district += str(i)
-            temp_district = SchoolDistrict.objects.create(name=district)
-            district = 'district'
+# description should NOT be seen on website, it just describes if an item is a main dish, side, or drink
+class Item:
+    def __init__(self, name, description, prep, ingredient_ls):
+        self.name = name
+        self.description = description
+        self.prep = prep
+        self.ingredient_ls = ingredient_ls
 
-            # create schools in each district
-            for j in range(self.num_schools):
-                school += str(j)
-                temp_school = temp_district.school_set.create(name=school)
-                school = 'school'
 
-                # create times for each school
-                for k in range(num_time):
-                    temp_time1 = temp_school.time_set.create(name=time1)
-                    time1 = 'time1'
-                    temp_time2 = temp_school.time_set.create(name=time2)
-                    time2 = 'time2'
+def set_up_db(apps, schema_editor):
+    main = "main"
+    side = "side"
+    drink = "drink"
+    prep1 = "No preparation required"
 
-                # create menus for each school
-                for k in range(self.num_menus):
-                    menu += str(k)
-                    temp_menu = temp_school.menu_set.create(name=menu)
-                    menu = 'menu'
+    breakfast = "Breakfast"
+    lunch = "Lunch"
 
-                    # create items for each menu
-                    for m in range(self.num_items):
-                        item += str(m)
-                        temp_meal = temp_menu.meal_set.create(name=item, description=description, prep=prep)
-                        item = 'item'
+    # just one school district
+    district = "Baltimore County"
 
-                        # create ingredients for each item
-                        for n in range(self.num_ingredients):
-                            ingr += str(n)
-                            temp_meal.ingredient_set.create(name=ingr)
-                            ingr = 'ingr'
+    schools = ["Arbutus Elementary", "Arbutus Middle", "Catonsville High", "Catonsville Middle", "Chesapeake High",
+               "Cockeysville Middle", "Deep Creek Middle", "Deer Park Middle", "Dulaney High", "Dumbarton Middle",
+               "Dundalk High", "Dundalk Middle", "Eastern Tech High", "Franklin High", "Franklin Middle",
+               "Golden Ring Middle", "Hereford High", "Hereford Middle", "Holabird Middle", "Kenwood High",
+               "Lansdowne High", "Lansdowne Middle", "Loch Raven High", "Middle River Middle", "Overlea High",
+               "Owings Mills High", "Parkville High", "Parkville Middle", "Perry Hall High", "Perry Hall Middle",
+               "Pikesville High", "Pikesville Middle", "Pine Grove Middle", "Randallstown High", "Ridgely Middle",
+               "Stemmers Run Middle", "Towson High School", "Windsor Mill Middle", "Woodlawn High", "Woodlawn Middle"]
 
-    def test_organization_of_db(self):
-        print("Running MenuModelsTestCase: test_organization_of_db")
+    # two types of menu, breakfast and lunch
+    menu = ["Breakfast", "Lunch"]
 
-        for district in SchoolDistrict.objects.all():
-            for school in district.school_set.all():
-                self.assertEqual(district.id, school.district.id)
-                for time in school.time_set.all():
-                    self.assertEqual(school.id, time.school.id)
-                for menu in school.menu_set.all():
-                    self.assertEqual(school.id, menu.school.id)
-                    for meal in menu.meal_set.all():
-                        self.assertEqual(menu.id, meal.menu.id)
-                        for ingredient in meal.ingredient_set.all():
-                            self.assertEqual(meal.id, ingredient.meal.id)
+    lunch_main_ls = [
+        Item("Cheese Pizza", main, None,
+             ["whole grain crust", "tomato sauce", "mozzarella cheese"]),
+        Item("Pepperoni Pizza", main, None,
+             ["whole grain crust", "tomato sauce", "mozzarella cheese", "pepperoni"]),
+        Item("Chicken Patty Sandwich", main, None,
+             ["chicken breast patty", "hamburger bun", "lettuce", "tomato"]),
+        Item("PB & J Sandwich", main, None,
+             ["peanut butter", "grape jelly", "whole grain bread"])
+    ]
+
+    lunch_side_ls = [
+        Item("Choice of Seasonal Fruit", side, None,
+             ["apple", "banana", "pear", "orange"]),
+        Item("Yogurt Cup", side, None,
+             ["Trix yogurt"]),
+        Item("Choice of Chip Snack", side, None,
+             ["Cheez-it Crackers", "Doritos Nacho Cheese", "Utz Classic Potato Chips",
+              "Utz Salt and Vinegar Chips", "Famous Amos Chocolate Chip Cookies"]),
+        Item("Vegetable Sticks with Ranch Dressing", side, None,
+             ["celery", "carrots", "broccoli", "ranch dressing"])
+    ]
+
+    breakfast_main_ls = [
+        Item("Assorted Cold Cereal", main, "Requires milk",
+             ["Cinnamon Chex", "Frosted Mini Wheats", "Honey Nut Cheerios", "Raisin Bran"]),
+        Item("Bagel and Cream Cheese", main, None,
+             ["whole wheat bagel", "cream cheese"]),
+        Item("Mini Cinnamon Rolls", main, None,
+             ["cinnamon roll", "sugar frosting"])
+    ]
+
+    breakfast_side_ls = [
+        Item("Applesauce Cup", side, None,
+             ["applesauce", "cinnamon"]),
+        Item("Choice of Seasonal Fruit", side, None,
+             ["apple", "banana", "pear", "orange"])
+    ]
+
+    # same drinks for both breakfast and lunch
+    drink_ls = [
+        Item("1% White Milk", drink, None, None),
+        Item("Fat Free White Milk", drink, None, None),
+        Item("Fat Free Chocolate Milk", drink, None, None),
+        Item("Fat Free Strawberry Milk", drink, None, None),
+        Item("Orange Juice", drink, None, None),
+        Item("Apple Juice", drink, None, None)
+    ]
+
+    # two menus per day, breakfast and lunch
+    # one main per menu
+    # sides and drinks all available
+
+    # create our single school district
+    SchoolDistrict = apps.get_model("Lapp", "SchoolDistrict")
+    temp_district = SchoolDistrict.objects.create(name=district)
+
+    # create the schools in the district
+    for school in schools:
+        temp_school = temp_district.school_set.create(name=school)
+
+        # create pickup times
+        timeAM = str(random.randint(7, 10)) + ":00AM"
+        timePM = str(random.randint(2, 6)) + ":00PM"
+        temp_school.time_set.create(name=timeAM)
+        temp_school.time_set.create(name=timePM)
+
+        # create menus for each school
+        for day in range(5):
+            # breakfast menu
+            temp_breakfast = temp_school.menu_set.create(name=breakfast)
+
+            # ### BREAKFAST ### #
+            num = random.randint(0, len(breakfast_main_ls) - 1)
+            temp_item = temp_breakfast.meal_set.create(name=breakfast_main_ls[num].name,
+                                                       description=breakfast_main_ls[num].description,
+                                                       prep=breakfast_main_ls[num].prep)
+
+            # breakfast main course ingredients
+            for ingredient in breakfast_main_ls[num].ingredient_ls:
+                temp_item.ingredient_set.create(name=ingredient)
+
+            # breakfast sides
+            for item in breakfast_side_ls:
+                temp_item = temp_breakfast.meal_set.create(name=item.name,
+                                                           description=item.description,
+                                                           prep=item.prep)
+                for ingredient in item.ingredient_ls:
+                    temp_item.ingredient_set.create(name=ingredient)
+
+            # breakfast drink
+            for item in drink_ls:
+                temp_breakfast.meal_set.create(name=item.name, description=item.description, prep=item.prep)
+
+            # ### LUNCH ### #
+            temp_lunch = temp_school.menu_set.create(name=lunch)
+
+            # lunch main course
+            num = random.randint(0, len(lunch_main_ls) - 1)
+            temp_item = temp_lunch.meal_set.create(name=lunch_main_ls[num].name,
+                                                   description=lunch_main_ls[num].description,
+                                                   prep=lunch_main_ls[num].prep)
+
+            # lunch main course ingredients
+            for ingredient in lunch_main_ls[num].ingredient_ls:
+                temp_item.ingredient_set.create(name=ingredient)
+
+            # lunch sides
+            for item in lunch_side_ls:
+                temp_item = temp_lunch.meal_set.create(name=item.name,
+                                                       description=item.description,
+                                                       prep=item.prep)
+                for ingredient in item.ingredient_ls:
+                    temp_item.ingredient_set.create(name=ingredient)
+
+            # lunch drink
+            for item in drink_ls:
+                temp_lunch.meal_set.create(name=item.name, description=item.description, prep=item.prep)
 
 
 # menu template test
@@ -227,7 +309,7 @@ class MenuTemplatesTestCase(TestCase):
             if school.time_set.exists():
                 for time in school.time_set.all():
                     temp_time = MenuObj(time.id, time.name)
-                    context['time_ls'].append(temp_time)
+                    meal_context['time_ls'].append(temp_time)
 
             if school.menu_set.exists():
                 for menu in school.menu_set.all():
