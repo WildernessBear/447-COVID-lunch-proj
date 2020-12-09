@@ -17,10 +17,9 @@
           {# Some logic on what to display for last item#}
           {% if user.is_authenticated %}
             <li><a class="navbar-brand" href="{% url 'index' %}"> Home <span class="glyphicon glyphicon-home"></span></a></li>
-            <!-- <li><a class="navbar-link" href="{% url 'Lapp:meals_menu' %}">Meals</a></li> -->
-
             <li><a class="navbar-link" href="{% url 'Lapp:schools_menu' %}"> Schools <span class="glyphicon glyphicon-info-sign"></span></a></li>
             <li><a class="navbar-link" href="{% url 'Lapp:faq' %}"> FAQ <span class="glyphicon glyphicon-question-sign"></span></a></li>
+          
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                    aria-expanded="true">Profile <span class="caret"></span></a>
@@ -30,7 +29,6 @@
                     <li><a class="dropdown-item" href="{% url 'logout' %}"> Logout <span class="glyphicon glyphicon-log-in"></span></a></li>
                 </ul>
             </li>
-
 
             {# Home Link / Admin Link / Register Link / Login Link#}
           {% else %}

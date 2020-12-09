@@ -72,22 +72,23 @@ body {font-family: Verdana, sans-serif;}
         </ul>
 
         <ul class="meal">
-            {% for menu in menu_ls %}
-            {% for meal in menu.meal_ls %}
-            <li><a href="{% url 'meal_page' meal.id %}">{{meal.name}}</a></li>
+            {% for menu in breakfast_ls %}
+            <li><a href="{% url 'menu_page' menu.id %}">{{menu.name}}</a></li>
             {% endfor %}
+            {% for menu in lunch_ls %}
+            <li><a href="{% url 'menu_page' menu.id %}">{{menu.name}}</a></li>
             {% endfor %}
         </ul>
 
 
       <h2> Pickup Location: </h2>
-      <!-- TO DO: Ideally, "{{ school }}" will link to a location on Maps -->
-      <!-- And school, start, and end times will all be user variables -->
-      <h5> At <a href="https://theuselessweb.com/">{{ school.name }}</a> </h5>
+      <h5> At {{ school.name }}. </h5>
 
-      <h1>  </h1>
       <h2> Pickup Time: </h2>
       <h5> Between {{ time_ls.0 }} to {{ time_ls.1}}</h5>
+
+      <h2> Get Directions: </h2>
+      <h5> <a href="https://www.google.com/maps/dir/?api=1&destination={{ school.name }}">{{ school.name }}</a> </h5>
 
       <h2> Receive E-mail Reminders: </h2>
       <h5><a href="{% url 'send_simple_email' user.email school.id %}"> Sign me up. </a></h5>

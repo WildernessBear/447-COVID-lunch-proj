@@ -5,6 +5,7 @@ from django.test import TestCase, Client
 from .models import SchoolDistrict, School, Menu, Meal, MyUser
 import django.template.loader
 
+
 # FOR DATABASE TESTS: classes should be subclasses django.test.TestCase
 # ONLY FOR NON-DATABASE TESTS: classes subclasses of unittest.TestCase or django.test.SimpleTestCase
 
@@ -31,6 +32,8 @@ class MenuModelsTestCase(TestCase):
         description = 'description goes here'
         prep = 'prep goes here'
         ingr = 'ingr'
+        time1 = 'time1'
+        time2 = 'time2'
 
         # create districts
         for i in range(self.num_districts):
@@ -43,6 +46,13 @@ class MenuModelsTestCase(TestCase):
                 school += str(j)
                 temp_school = temp_district.school_set.create(name=school)
                 school = 'school'
+
+                # create times for each school
+                for k in range(num_time):
+                    temp_time1 = temp_school.time_set.create(name=time1)
+                    time1 = 'time1'
+                    temp_time2 = temp_school.time_set.create(name=time2)
+                    time2 = 'time2'
 
                 # create menus for each school
                 for k in range(self.num_menus):
@@ -68,6 +78,8 @@ class MenuModelsTestCase(TestCase):
         for district in SchoolDistrict.objects.all():
             for school in district.school_set.all():
                 self.assertEqual(district.id, school.district.id)
+                for time in school.time_set.all():
+                    self.assertEqual(school.id, time.school.id)
                 for menu in school.menu_set.all():
                     self.assertEqual(school.id, menu.school.id)
                     for meal in menu.meal_set.all():
@@ -85,12 +97,25 @@ class SchoolObj:
         self.id = id
         self.name = name
 
+
 # this holds menu information for a single menu
 class MenuObj:
     def __init__(self, id, name):
         self.id = id
         self.name = name
         self.meal_ls = []
+
+
+# this holds menu information for two times
+class TimeObj:
+    def __init__(self, time_id, name):
+        self.id = time_id
+        self.name = name
+        self.time_ls = []
+
+    def __str__(self):
+        return self.name
+
 
 # this holds information for a single meal
 class MealObj:
@@ -101,6 +126,7 @@ class MealObj:
         self.prep = prep
         self.ingredient_ls = []
 
+
 class MenuTemplatesTestCase(TestCase):
     def setUp(self):
         self.num_districts = 10
@@ -108,6 +134,7 @@ class MenuTemplatesTestCase(TestCase):
         self.num_menus = 2
         self.num_items = 3
         self.num_ingredients = 3
+        self.num_time = 1
 
         district = 'district'
         school = 'school'
@@ -116,6 +143,8 @@ class MenuTemplatesTestCase(TestCase):
         description = 'description goes here'
         prep = 'prep goes here'
         ingr = 'ingr'
+        time1 = '0:00 AM'
+        time2 = '0:00 PM'
 
         # create districts
         for i in range(self.num_districts):
@@ -128,6 +157,13 @@ class MenuTemplatesTestCase(TestCase):
                 school += str(j)
                 temp_school = temp_district.school_set.create(name=school)
                 school = 'school'
+
+            # create times for each school
+            for k in range(self.num_time):
+                time1 = str(i) + ':' + str(j) + str(k) + 'AM'
+                temp_time1 = temp_school.time_set.create(name=time1)
+                time2 = str(i) + ':' + str(j) + str(k) + 'PM'
+                temp_time2 = temp_school.time_set.create(name=time2)
 
                 # create menus for each school
                 for k in range(self.num_menus):
@@ -150,10 +186,11 @@ class MenuTemplatesTestCase(TestCase):
         # set up a user & log in
         self.client = Client()
         self.credentials = {
-             'username': 'george',
-             'password': 'secret',
-             'email': 'email@gmail.com'}
-        self.user = MyUser.objects.create(username=self.credentials['username'], email=self.credentials['email'], password=self.credentials['password'])
+            'username': 'george',
+            'password': 'secret',
+            'email': 'email@gmail.com'}
+        self.user = MyUser.objects.create(username=self.credentials['username'], email=self.credentials['email'],
+                                          password=self.credentials['password'])
         user = authenticate(username=self.credentials['username'], password=self.credentials['password'])
         if user:
             self.client.login(username=self.credentials['username'], password=self.credentials['password'])
@@ -179,12 +216,18 @@ class MenuTemplatesTestCase(TestCase):
         meal_context = {
             'school': '',
             'menu_ls': [],
+            'time_ls': [],
             'error': None
         }
 
         for school in School.objects.all():
             temp_school = SchoolObj(school.id, school.name)
             meal_context['school'] = temp_school
+
+            if school.time_set.exists():
+                for time in school.time_set.all():
+                    temp_time = MenuObj(time.id, time.name)
+                    context['time_ls'].append(temp_time)
 
             if school.menu_set.exists():
                 for menu in school.menu_set.all():
@@ -203,7 +246,6 @@ class MenuTemplatesTestCase(TestCase):
             with self.assertTemplateUsed('Lapp/meals.html'):
                 render_to_string('Lapp/meals.html', meal_context)
 
-
     def test_meal_page(self):
         print("Running MenuTemplatesTestCase: test_meal_page")
 
@@ -219,4 +261,3 @@ class MenuTemplatesTestCase(TestCase):
             item_context['item'] = temp_meal
             with self.assertTemplateUsed('Lapp/meal_page.html'):
                 render_to_string('Lapp/meal_page.html', item_context)
-

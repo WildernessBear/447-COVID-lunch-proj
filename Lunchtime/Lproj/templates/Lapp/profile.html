@@ -13,7 +13,7 @@
         {% else %}
         <form enctype="multipart/form-data" method="POST">
             {% csrf_token %}
-            <h3>Dietary Restrictions:</h3>
+            <h3>Please indicate any dietary restrictions:</h3>
             {{ dietary_form.as_p }}
             <input type="submit" name="ProfileButton" value="Submit">
         </form>
