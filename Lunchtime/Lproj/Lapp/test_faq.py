@@ -1,6 +1,7 @@
 from django.template.loader import render_to_string
 from django.test import SimpleTestCase
 
+
 class FAQTemplateTestCase(SimpleTestCase):
     def setUp(self):
         pass

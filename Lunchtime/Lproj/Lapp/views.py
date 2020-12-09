@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from .models import School, Meal, SchoolDistrict, Student  # , SchoolDistrict  # , Menu, Time
+from .models import School, Meal, Menu, # SchoolDistrict, Student  # , SchoolDistrict  # , Menu, Time
 
 
 
@@ -115,7 +115,7 @@ def meals_menu(response, sch_id):
                 #
                 #     temp_menu.meal_ls.append(temp_meal)
 
-                if(temp_menu.name == 'Lunch'):
+                if temp_menu.name == 'Lunch':
                     context['lunch_ls'].append(temp_menu)
                 else:
                     context['breakfast_ls'].append(temp_menu)
@@ -242,11 +242,11 @@ def send_simple_email(request, emailto, sch_id):
                 context['time_ls'].append(temp_time)
 
             # noinspection PyUnboundLocalVariable
-            res = send_mail("Hello User",  # subject
-                            "This is a reminder to pick up your meal for today at "
-                            + temp_school.name + " until " + time.name,  # message
-                            "conamebiz@gmail.com",  # from_email
-                            [emailto])  # recipient_list
+            send_mail("Hello User",  # subject
+                      "This is a reminder to pick up your meal for today at "
+                      + temp_school.name + " until " + time.name,  # message
+                      "conamebiz@gmail.com",  # from_email
+                      [emailto])
 
             return HttpResponse('Reminder Sent!')
 
@@ -271,12 +271,24 @@ def update_profile(request):
     if request.method == 'POST':
         dietary_form = DietaryForm(data=request.POST)
         if dietary_form.is_valid():
+            # save the data
             dietary_form.save()
             submitted = True
         else:
             print(dietary_form.errors, )
+
+        school_form = SchoolForm(data=request.POST)
+        if school_form.is_valid():
+            # save the data
+            school_form.save()
+            submitted = True
+        else:
+            print(school_form.errors, )
     else:
         dietary_form = DietaryForm()
+        school_form = SchoolForm()
+    return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form, 'school_form': school_form,
+                                                 'submitted': submitted})
     return render(request, 'Lapp/profile.html', {'dietary_form': dietary_form,
                                                  'submitted': submitted})
 

@@ -6,8 +6,8 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
   </head>
+
   <body style="background-color: #8DA7BE;">
     <nav class="navbar navbar-inverse navbar-static-top" style="background-color:#3A302C; ">
       <div class="container">
@@ -19,7 +19,7 @@
             <li><a class="navbar-brand" href="{% url 'index' %}"> Home <span class="glyphicon glyphicon-home"></span></a></li>
             <li><a class="navbar-link" href="{% url 'Lapp:schools_menu' %}"> Schools <span class="glyphicon glyphicon-info-sign"></span></a></li>
             <li><a class="navbar-link" href="{% url 'Lapp:faq' %}"> FAQ <span class="glyphicon glyphicon-question-sign"></span></a></li>
-          
+
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                    aria-expanded="true">Profile <span class="caret"></span></a>
@@ -41,8 +41,8 @@
       </div>
     </nav>
     <div class="container">
-        {% block body_block %}
-        {% endblock %}
+    {% block body_block %}
+    {% endblock %}
     </div>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

@@ -1,5 +1,4 @@
 from django import forms
-
 from .models import MyUser, Student
 
 
@@ -9,6 +8,14 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = MyUser
         fields = ('username', 'password', 'email')
+
+
+class SchoolForm(forms.ModelForm):
+    school = forms.CharField(required=False)
+
+    class Meta:
+        model = Student
+        fields = ('school', )
 
 
 class DietaryForm(forms.ModelForm):
